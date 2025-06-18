@@ -9,7 +9,7 @@
         :square-size="4"
         :grid-gap="6"
         color="#60A5FA"
-        :max-opacity="0.3"
+        :max-opacity="0.4"
         :flicker-chance="0.1" />
 
       <div class="relative z-10 max-w-4xl mx-auto border-0 py-10 px-4 lg:px-0">
@@ -29,10 +29,9 @@
             class="w-fit font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
             <div class="flex items-center">
               <img
-                src="/logo.png"
+                src="/logo-light.svg"
                 alt="TalentSight Logo"
-                class="w-5 h-5 mr-2"
-                :class="preference === 'light' ? 'invert' : ''" />
+                class="w-5 h-5 mr-2 dark:invert" />
               TalentSight
             </div></LinkPreview
           >, an AI-driven recruitment platform designed to help recruiters save
@@ -84,13 +83,13 @@
                 <img
                   :src="project.image"
                   :alt="project.name"
-                  class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
+                  class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-130" />
               </div>
 
               <h3 class="text-sm sm:text-md font-semibold line-clamp-1">
                 {{ project.name }}
               </h3>
-              <p class="text-xs text-muted-foreground line-clamp-2 mt-1">
+              <p class="text-xs text-muted-foreground line-clamp-5 mt-1">
                 {{ project.description }}
               </p>
             </CardContent>
@@ -101,19 +100,19 @@
                   variant="outline"
                   size="sm"
                   asChild>
-                  <a
-                    :href="project.github"
+                  <NuxtLink
+                    :to="project.github"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
                     <LucideGithub class="size-3 sm:size-4" />
                     <span class="hidden sm:inline">GitHub</span>
                     <span class="sm:hidden">Git</span>
-                  </a>
+                  </NuxtLink>
                 </Button>
                 <Button v-if="project.npm" variant="outline" size="sm" asChild>
-                  <a
-                    :href="project.npm"
+                  <NuxtLink
+                    :to="project.npm"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
@@ -127,18 +126,18 @@
                     </div>
                     <span class="hidden sm:inline">NPM</span>
                     <span class="sm:hidden">NPM</span>
-                  </a>
+                  </NuxtLink>
                 </Button>
                 <Button v-if="project.demo" variant="outline" size="sm" asChild>
-                  <a
-                    :href="project.demo"
+                  <NuxtLink
+                    :to="project.demo"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
                     <LucideExternalLink class="size-3 sm:size-4" />
                     <span class="hidden sm:inline">Demo</span>
                     <span class="sm:hidden">Live</span>
-                  </a>
+                  </NuxtLink>
                 </Button>
               </div>
             </CardFooter>
@@ -150,10 +149,11 @@
 </template>
 
 <script setup lang="ts">
-const { preference } = useColorMode();
+const { value } = useColorMode();
+const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
   {
-    name: "a12v",
+    name: "a12v-stack",
     description:
       "Modern Nuxt 3 App Boilerplate: Vue, Nuxt, Shadcn, Pinia, Tanstack Query, Zod, AI SDK, Clerk, Polar.sh, Supabase and more.",
     image: "/a12v.png",
