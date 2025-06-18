@@ -160,6 +160,14 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
   {
+    name: "ziip",
+    description:
+      "Zip is an open-source clone of LinkedIn's Zip game. You need to connect the dots and fill all of the cells.",
+    image: "/ziip.png",
+    github: "https://github.com/alexander-gekov/ziip",
+    demo: "https://ziip.vercel.app/",
+  },
+  {
     name: "a12v-stack",
     description:
       "Modern Nuxt 3 App Boilerplate: Vue, Nuxt, Shadcn, Pinia, Tanstack Query, Zod, AI SDK, Clerk, Polar.sh, Supabase and more.",
