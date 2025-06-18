@@ -31,7 +31,8 @@
               <img
                 src="/logo.png"
                 alt="TalentSight Logo"
-                class="w-5 h-5 mr-2" />
+                class="w-5 h-5 mr-2"
+                :class="preference === 'light' ? 'invert' : ''" />
               TalentSight
             </div></LinkPreview
           >, an AI-driven recruitment platform designed to help recruiters save
@@ -149,6 +150,7 @@
 </template>
 
 <script setup lang="ts">
+const { preference } = useColorMode();
 const projects = [
   {
     name: "a12v",
