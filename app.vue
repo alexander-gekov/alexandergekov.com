@@ -12,7 +12,7 @@
         :max-opacity="0.3"
         :flicker-chance="0.1" />
 
-      <div class="relative z-10 max-w-4xl mx-auto border-0 py-10">
+      <div class="relative z-10 max-w-4xl mx-auto border-0 py-10 px-4 lg:px-0">
         <img
           src="/casual.jpeg"
           alt="Alexander Gekov"
@@ -73,26 +73,28 @@
           </LinkPreview>
         </p>
         <h2 class="text-lg font-bold mt-12">Recent Projects</h2>
-        <div class="grid grid-cols-4 gap-4 mt-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           <Card
             v-for="project in projects"
             :key="project.name"
             class="group overflow-hidden bg-background/50 backdrop-blur-sm">
-            <CardContent class="p-4 h-full">
-              <div class="aspect-video mb-4 overflow-hidden rounded-lg">
+            <CardContent class="p-3 sm:p-4 h-full">
+              <div class="aspect-video mb-3 sm:mb-4 overflow-hidden rounded-lg">
                 <img
                   :src="project.image"
                   :alt="project.name"
                   class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
               </div>
 
-              <h3 class="text-md font-semibold">{{ project.name }}</h3>
-              <p class="text-xs text-muted-foreground">
+              <h3 class="text-sm sm:text-md font-semibold line-clamp-1">
+                {{ project.name }}
+              </h3>
+              <p class="text-xs text-muted-foreground line-clamp-2 mt-1">
                 {{ project.description }}
               </p>
             </CardContent>
-            <CardFooter class="px-4">
-              <div class="flex flex-wrap gap-2">
+            <CardFooter class="px-3 sm:px-4 py-2">
+              <div class="flex flex-wrap gap-1.5 sm:gap-2">
                 <Button
                   v-if="project.github"
                   variant="outline"
@@ -102,9 +104,10 @@
                     :href="project.github"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center gap-1 text-xs">
-                    <LucideGithub class="size-4" />
-                    GitHub
+                    class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
+                    <LucideGithub class="size-3 sm:size-4" />
+                    <span class="hidden sm:inline">GitHub</span>
+                    <span class="sm:hidden">Git</span>
                   </a>
                 </Button>
                 <Button v-if="project.npm" variant="outline" size="sm" asChild>
@@ -112,15 +115,17 @@
                     :href="project.npm"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center gap-1 text-xs">
-                    <div class="size-4 flex items-center justify-center">
-                      <svg viewBox="0 0 24 24" class="size-3">
+                    class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
+                    <div
+                      class="size-3 sm:size-4 flex items-center justify-center">
+                      <svg viewBox="0 0 24 24" class="size-2.5 sm:size-3">
                         <path
                           fill="currentColor"
                           d="M0 0v24h24V0H0zm19.2 19.2H4.8V4.8h14.4v14.4z" />
                       </svg>
                     </div>
-                    NPM
+                    <span class="hidden sm:inline">NPM</span>
+                    <span class="sm:hidden">NPM</span>
                   </a>
                 </Button>
                 <Button v-if="project.demo" variant="outline" size="sm" asChild>
@@ -128,9 +133,10 @@
                     :href="project.demo"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center gap-1 text-xs">
-                    <LucideExternalLink class="size-4" />
-                    Demo
+                    class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
+                    <LucideExternalLink class="size-3 sm:size-4" />
+                    <span class="hidden sm:inline">Demo</span>
+                    <span class="sm:hidden">Live</span>
                   </a>
                 </Button>
               </div>
