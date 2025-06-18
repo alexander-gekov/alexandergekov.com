@@ -165,7 +165,7 @@ const projects = [
       "Zip is an open-source clone of LinkedIn's Zip game. You need to connect the dots and fill all of the cells.",
     image: "/ziip.png",
     github: "https://github.com/alexander-gekov/ziip",
-    demo: "https://ziip.vercel.app/",
+    demo: "https://ziip.fun/",
   },
   {
     name: "a12v-stack",
