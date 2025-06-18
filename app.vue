@@ -6,10 +6,10 @@
 
       <FlickeringGrid
         class="fixed inset-0 z-10 [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]"
-        :square-size="4"
-        :grid-gap="6"
+        :square-size="isLargeScreen ? 4 : 2"
+        :grid-gap="isLargeScreen ? 4 : 2"
         color="#60A5FA"
-        :max-opacity="0.4"
+        :max-opacity="isLargeScreen ? 0.3 : 0.2"
         :flicker-chance="0.1" />
 
       <div class="relative z-10 max-w-4xl mx-auto border-0 py-10 px-4 lg:px-0">
@@ -102,6 +102,7 @@
                   asChild>
                   <NuxtLink
                     :to="project.github"
+                    external
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
@@ -113,6 +114,7 @@
                 <Button v-if="project.npm" variant="outline" size="sm" asChild>
                   <NuxtLink
                     :to="project.npm"
+                    external
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
@@ -131,6 +133,7 @@
                 <Button v-if="project.demo" variant="outline" size="sm" asChild>
                   <NuxtLink
                     :to="project.demo"
+                    external
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
@@ -149,7 +152,11 @@
 </template>
 
 <script setup lang="ts">
+import { useMediaQuery } from "@vueuse/core";
+
 const { value } = useColorMode();
+const isLargeScreen = useMediaQuery("(min-width: 768px)");
+
 const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
   {
