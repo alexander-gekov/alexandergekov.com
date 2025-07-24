@@ -160,6 +160,15 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
   {
+    name: "upstash-search-ui-vue",
+    description:
+      "Beautifully-designed, accessible search components. Port of @upstash/search-ui for Vue.",
+    image: "/upstash.png",
+    github: "https://github.com/alexander-gekov/upstash-search-ui-vue",
+    npm: "https://www.npmjs.com/package/upstash-search-ui-vue",
+    demo: "https://upstash-search-ui-vue-demo.vercel.app/",
+  },
+  {
     name: "ziip",
     description:
       "Zip is an open-source clone of LinkedIn's Zip game. You need to connect the dots and fill all of the cells.",
