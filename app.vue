@@ -160,6 +160,14 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
   {
+    name: "Infinite Alchemy",
+    description:
+      "Infinite Alchemy is a game where you can create new elements by combining existing ones.",
+    image: "/infinitealchemy.png",
+    github: "https://github.com/alexander-gekov/infinite-alchemy",
+    demo: "https://www.infinitealche.my/",
+  },
+  {
     name: "upstash-search-ui-vue",
     description:
       "Beautifully-designed, accessible search components. Port of @upstash/search-ui for Vue.",
