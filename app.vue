@@ -160,6 +160,14 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
   {
+    name: "Tängo",
+    description:
+      "Tängo is an open-source clone of LinkedIn's Tango game. You need to fill in all the suns and moons to win.",
+    image: "/taengo.png",
+    github: "https://github.com/alexander-gekov/taengo",
+    demo: "https://taengo.vercel.app/",
+  },
+  {
     name: "Infinite Alchemy",
     description:
       "Infinite Alchemy is a game where you can create new elements by combining existing ones.",
