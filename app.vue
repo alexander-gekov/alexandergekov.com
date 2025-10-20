@@ -159,13 +159,13 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
 const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
-  // {
-  //   name: "Tängo",
-  //   description:
-  //     "Tängo is an open-source clone of LinkedIn's Tango game. You need to fill in all the suns and moons to win.",
-  //   image: "/taengo.png",
-  //   github: "https://github.com/alexander-gekov/taengo",
-  // },
+  {
+    name: "Tängo",
+    description:
+      "Tängo is an open-source clone of LinkedIn's Tango game. You need to fill in all the suns and moons to win.",
+    image: "/taengo.png",
+    // github: "https://github.com/alexander-gekov/taengo",
+  },
   {
     name: "Infinite Alchemy",
     description:
@@ -183,14 +183,14 @@ const projects = [
     npm: "https://www.npmjs.com/package/upstash-search-ui-vue",
     demo: "https://upstash-search-ui-vue-demo.vercel.app/",
   },
-  // {
-  //   name: "ziip",
-  //   description:
-  //     "Zip is an open-source clone of LinkedIn's Zip game. You need to connect the dots and fill all of the cells.",
-  //   image: "/ziip.png",
-  //   github: "https://github.com/alexander-gekov/ziip",
-  //   demo: "https://ziip.fun/",
-  // },
+  {
+    name: "ziip",
+    description:
+      "Zip is an open-source clone of LinkedIn's Zip game. You need to connect the dots and fill all of the cells.",
+    image: "/ziip.png",
+    // github: "https://github.com/alexander-gekov/ziip",
+    // demo: "https://ziip.fun/",
+  },
   {
     name: "a12v-stack",
     description:
@@ -208,14 +208,14 @@ const projects = [
     github: "https://github.com/alexander-gekov/github-garden",
     demo: "https://github-garden.vercel.app/",
   },
-  {
-    name: "RecruiterMatch",
-    description:
-      "AI-powered puzzle game for recruiters to source and find the most correct candidate for given job description.",
-    image: "/recruitermatch.png",
-    github: "https://github.com/alexander-gekov/recruiter-match",
-    demo: "https://recruitermatch.vercel.app/",
-  },
+  // {
+  //   name: "RecruiterMatch",
+  //   description:
+  //     "AI-powered puzzle game for recruiters to source and find the most correct candidate for given job description.",
+  //   image: "/recruitermatch.png",
+  //   github: "https://github.com/alexander-gekov/recruiter-match",
+  //   demo: "https://recruitermatch.vercel.app/",
+  // },
   {
     name: "mrtnz.cc",
     description:
