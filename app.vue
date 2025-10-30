@@ -160,11 +160,28 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
   {
-    name: "Tängo",
+    name: "PriceBarometer",
     description:
-      "Tängo is an open-source clone of LinkedIn's Tango game. You need to fill in all the suns and moons to win.",
+      "Price Barometer is a platform to track prices of products from supermarkets like Billa, Lidl, Kaufland, Fantastiko, etc.",
+    image: "/price-barometer.png",
+    // github: "https://github.com/alexander-gekov/taengo",
+    demo: "https://www.price-barometer.vercel.app/",
+  },
+  {
+    name: "Pawns",
+    description:
+      "Pawns is an open-source puzzle game. You need to fill in all the suns and moons to win.",
+    image: "/pawns.png",
+    // github: "https://github.com/alexander-gekov/taengo",
+    demo: "https://www.pawns.vercel.app/",
+  },
+  {
+    name: "Horo",
+    description:
+      "Horo is an open-source puzzle game. You need to fill in all the suns and moons to win.",
     image: "/taengo.png",
     // github: "https://github.com/alexander-gekov/taengo",
+    demo: "https://www.horo-game.vercel.app/",
   },
   {
     name: "Infinite Alchemy",
@@ -184,12 +201,12 @@ const projects = [
     demo: "https://upstash-search-ui-vue-demo.vercel.app/",
   },
   {
-    name: "ziip",
+    name: "Stitch",
     description:
-      "Zip is an open-source clone of LinkedIn's Zip game. You need to connect the dots and fill all of the cells.",
+      "Stitch is an open-source connect the doths Puzzle game. You need to connect the dots and fill all of the cells.",
     image: "/ziip.png",
     // github: "https://github.com/alexander-gekov/ziip",
-    // demo: "https://ziip.fun/",
+    demo: "https://stitch-connect.vercel.app/",
   },
   {
     name: "a12v-stack",
