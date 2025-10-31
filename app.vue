@@ -165,7 +165,7 @@ const projects = [
       "Price Barometer is a platform to track prices of products from supermarkets like Billa, Lidl, Kaufland, Fantastiko, etc.",
     image: "/price-barometer.png",
     // github: "https://github.com/alexander-gekov/taengo",
-    demo: "https://www.price-barometer.vercel.app/",
+    demo: "https://price-barometer.vercel.app/",
   },
   {
     name: "Pawns",
@@ -173,7 +173,7 @@ const projects = [
       "Pawns is an open-source puzzle game. You need to fill in all the suns and moons to win.",
     image: "/pawns.png",
     // github: "https://github.com/alexander-gekov/taengo",
-    demo: "https://www.pawns.vercel.app/",
+    demo: "https://pawns.vercel.app/",
   },
   {
     name: "Horo",
@@ -181,7 +181,7 @@ const projects = [
       "Horo is an open-source puzzle game. You need to fill in all the suns and moons to win.",
     image: "/taengo.png",
     // github: "https://github.com/alexander-gekov/taengo",
-    demo: "https://www.horo-game.vercel.app/",
+    demo: "https://horo-game.vercel.app/",
   },
   {
     name: "Infinite Alchemy",
@@ -189,7 +189,7 @@ const projects = [
       "Infinite Alchemy is a game where you can create new elements by combining existing ones.",
     image: "/infinitealchemy.png",
     github: "https://github.com/alexander-gekov/infinite-alchemy",
-    demo: "https://www.infinitealche.my/",
+    demo: "https://infinitealche.my/",
   },
   {
     name: "upstash-search-ui-vue",
