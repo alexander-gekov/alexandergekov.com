@@ -1,8 +1,7 @@
 <template>
   <ClientOnly>
-    <div
-      class="relative w-full overflow-hidden rounded-lg bg-background font-mono">
-      <NavBar class="relative z-20 max-w-4xl mx-auto" />
+    <div class="relative w-full overflow-hidden bg-background font-mono">
+      <NavBar class="relative z-20 max-w-3xl mx-auto" />
 
       <FlickeringGrid
         class="fixed inset-0 z-10 [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]"
@@ -12,13 +11,21 @@
         :max-opacity="isLargeScreen ? 0.3 : 0.2"
         :flicker-chance="0.1" />
 
-      <div class="relative z-10 max-w-4xl mx-auto border-0 py-10 px-4 lg:px-0">
-        <img
-          src="/casual.jpeg"
-          alt="Alexander Gekov"
-          class="w-16 h-16 mr-2 rounded-full" />
-        <h1 class="text-2xl font-bold mt-4">Alexander Gekov</h1>
-        <p class="text-sm text-muted-foreground mt-2">
+      <div class="relative z-10 max-w-3xl mx-auto border-0 py-16 px-4 lg:px-0">
+        <div class="flex items-center gap-4">
+          <img
+            src="/casual.jpeg"
+            alt="Alexander Gekov"
+            class="w-14 h-14 rounded-full" />
+          <div class="min-w-0">
+            <h1 class="text-2xl font-bold tracking-tight">Alexander Gekov</h1>
+            <p class="text-sm text-muted-foreground mt-1">
+              GitHub · Twitter · YouTube · LinkedIn
+            </p>
+          </div>
+        </div>
+
+        <p class="text-sm text-muted-foreground mt-6">
           Co-Founder @ TalentSight | Software Engineer | AI Enthusiast Helping
           Recruiters Succeed
         </p>
@@ -37,114 +44,68 @@
           >, an AI-driven recruitment platform designed to help recruiters save
           hours of manual work in terms of sourcing and outreach.
         </p>
-        <p class="text-sm text-muted-foreground mt-4">
-          Find me on
-          <LinkPreview
-            url="https://github.com/alexander-gekov"
-            class="w-fit font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
-            <div class="flex items-center">
-              <LucideGithub :size="16" class="mr-2" />
-              GitHub
-            </div></LinkPreview
-          >,
-          <LinkPreview
-            url="https://x.com/AlexanderGekov"
-            class="w-fit font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
-            <div class="flex items-center">
-              <LucideX :size="16" class="mr-2" />
-              Twitter
-            </div> </LinkPreview
-          >,
-          <LinkPreview
-            url="https://www.youtube.com/@AlexanderGekov"
-            class="w-fit font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
-            <div class="flex items-center">
-              <LucideYoutube :size="16" class="mr-2" />
-              YouTube
-            </div> </LinkPreview
-          >,
-          <LinkPreview
-            url="https://www.linkedin.com/in/alexander-gekov/"
-            class="w-fit font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
-            <div class="flex items-center">
-              <LucideLinkedin :size="16" class="mr-2" />
-              LinkedIn
+        <div class="mt-10 space-y-12">
+          <section>
+            <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
+              Experience
             </div>
-          </LinkPreview>
-        </p>
-        <h2 class="text-lg font-bold mt-12">Recent Projects</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-          <Card
-            v-for="project in projects"
-            :key="project.name"
-            class="group overflow-hidden bg-background/50 backdrop-blur-sm">
-            <CardContent class="p-3 sm:p-4 h-full">
-              <div class="aspect-video mb-3 sm:mb-4 overflow-hidden rounded-lg">
-                <img
-                  :src="project.image"
-                  :alt="project.name"
-                  class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-130" />
+            <div class="mt-4 space-y-4">
+              <div
+                v-for="experience in experiences"
+                :key="experience.company"
+                class="flex items-start justify-between gap-6">
+                <div class="min-w-0">
+                  <div class="text-sm font-semibold leading-tight">
+                    {{ experience.company }}
+                  </div>
+                  <div
+                    v-if="experience.title"
+                    class="mt-1 text-xs text-muted-foreground">
+                    {{ experience.title }}
+                  </div>
+                </div>
+                <div class="text-xs text-muted-foreground whitespace-nowrap">
+                  {{ experience.date }}
+                </div>
               </div>
+            </div>
+          </section>
 
-              <h3 class="text-sm sm:text-md font-semibold line-clamp-1">
-                {{ project.name }}
-              </h3>
-              <p class="text-xs text-muted-foreground line-clamp-5 mt-1">
-                {{ project.description }}
-              </p>
-            </CardContent>
-            <CardFooter class="px-3 sm:px-4 py-2">
-              <div class="flex flex-wrap gap-1.5 sm:gap-2">
-                <Button
-                  v-if="project.github"
-                  variant="outline"
-                  size="sm"
-                  asChild>
+          <section>
+            <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
+              Projects
+            </div>
+            <ProjectsMarquee :projects="projects" :duration-seconds="48" />
+          </section>
+
+          <section>
+            <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
+              Blog posts
+            </div>
+            <div class="mt-4 space-y-3">
+              <template v-if="blogPosts.length">
+                <div
+                  v-for="post in blogPosts"
+                  :key="post.title"
+                  class="flex items-center justify-between gap-6">
                   <NuxtLink
-                    :to="project.github"
+                    :to="post.href"
                     external
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
-                    <LucideGithub class="size-3 sm:size-4" />
-                    <span class="hidden sm:inline">GitHub</span>
-                    <span class="sm:hidden">Git</span>
+                    class="text-sm font-semibold tracking-tight hover:underline underline-offset-4">
+                    {{ post.title }}
                   </NuxtLink>
-                </Button>
-                <Button v-if="project.npm" variant="outline" size="sm" asChild>
-                  <NuxtLink
-                    :to="project.npm"
-                    external
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
-                    <div
-                      class="size-3 sm:size-4 flex items-center justify-center">
-                      <svg viewBox="0 0 24 24" class="size-2.5 sm:size-3">
-                        <path
-                          fill="currentColor"
-                          d="M0 0v24h24V0H0zm19.2 19.2H4.8V4.8h14.4v14.4z" />
-                      </svg>
-                    </div>
-                    <span class="hidden sm:inline">NPM</span>
-                    <span class="sm:hidden">NPM</span>
-                  </NuxtLink>
-                </Button>
-                <Button v-if="project.demo" variant="outline" size="sm" asChild>
-                  <NuxtLink
-                    :to="project.demo"
-                    external
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
-                    <LucideExternalLink class="size-3 sm:size-4" />
-                    <span class="hidden sm:inline">Demo</span>
-                    <span class="sm:hidden">Live</span>
-                  </NuxtLink>
-                </Button>
+                  <div class="text-xs text-muted-foreground whitespace-nowrap">
+                    {{ post.date }}
+                  </div>
+                </div>
+              </template>
+              <div v-else class="text-sm text-muted-foreground">
+                Writing soon.
               </div>
-            </CardFooter>
-          </Card>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -157,14 +118,12 @@ import { useMediaQuery } from "@vueuse/core";
 const { value } = useColorMode();
 const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
-const colorMode = computed(() => (value === "dark" ? "dark" : "light"));
 const projects = [
   {
     name: "PriceBarometer",
     description:
       "Price Barometer is a platform to track prices of products from supermarkets like Billa, Lidl, Kaufland, Fantastiko, etc.",
     image: "/price-barometer.png",
-    // github: "https://github.com/alexander-gekov/taengo",
     demo: "https://price-barometer.vercel.app/",
   },
   {
@@ -172,7 +131,6 @@ const projects = [
     description:
       "Pawns is an open-source puzzle game. You need to fill in all the suns and moons to win.",
     image: "/pawns.png",
-    // github: "https://github.com/alexander-gekov/taengo",
     demo: "https://pawns.vercel.app/",
   },
   {
@@ -180,7 +138,6 @@ const projects = [
     description:
       "Horo is an open-source puzzle game. You need to fill in all the suns and moons to win.",
     image: "/taengo.png",
-    // github: "https://github.com/alexander-gekov/taengo",
     demo: "https://horo-game.vercel.app/",
   },
   {
@@ -205,7 +162,6 @@ const projects = [
     description:
       "Stitch is an open-source connect the doths Puzzle game. You need to connect the dots and fill all of the cells.",
     image: "/ziip.png",
-    // github: "https://github.com/alexander-gekov/ziip",
     demo: "https://stitch-connect.vercel.app/",
   },
   {
@@ -225,14 +181,6 @@ const projects = [
     github: "https://github.com/alexander-gekov/github-garden",
     demo: "https://github-garden.vercel.app/",
   },
-  // {
-  //   name: "RecruiterMatch",
-  //   description:
-  //     "AI-powered puzzle game for recruiters to source and find the most correct candidate for given job description.",
-  //   image: "/recruitermatch.png",
-  //   github: "https://github.com/alexander-gekov/recruiter-match",
-  //   demo: "https://recruitermatch.vercel.app/",
-  // },
   {
     name: "mrtnz.cc",
     description:
@@ -242,4 +190,23 @@ const projects = [
     demo: "https://mrtnz.cc",
   },
 ];
+
+const experiences = [
+  {
+    company: "TalentSight Inc.",
+    title: "Co-Founder & CTO",
+    date: "Nov 2023 - Present",
+  },
+  {
+    company: "OfficeRnd",
+    title: "Frontend Developer",
+    date: "Sep 2023 - Nov 2023",
+  },
+  {
+    company: "Axion Biosystems (formerly Cytosmart)",
+    date: "Nov 2020 - July 2023",
+  },
+];
+
+const blogPosts = [] as Array<{ title: string; href: string; date: string }>;
 </script>
