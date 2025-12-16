@@ -15,14 +15,14 @@
           </div>
 
           <div
-            class="absolute inset-0 bg-gradient-to-t from-background/95 via-background/35 to-transparent opacity-0 transition-opacity duration-300 group-hover/item:opacity-100" />
+            class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent opacity-0 transition-opacity duration-300 group-hover/item:opacity-100" />
 
           <div
             class="absolute inset-0 flex flex-col justify-end p-4 opacity-0 transition-opacity duration-300 group-hover/item:opacity-100">
-            <div class="text-sm font-semibold tracking-tight">
+            <div class="text-sm font-semibold tracking-tight text-foreground">
               {{ project.name }}
             </div>
-            <div class="mt-1 text-xs leading-relaxed text-muted-foreground line-clamp-3">
+            <div class="mt-1 text-xs leading-relaxed text-foreground/80 line-clamp-3">
               {{ project.description }}
             </div>
 

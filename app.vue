@@ -1,50 +1,51 @@
 <template>
   <ClientOnly>
-    <div class="relative w-full overflow-hidden bg-background font-mono">
-      <NavBar class="relative z-20 max-w-3xl mx-auto" />
+    <div class="relative w-full overflow-hidden bg-background font-sans">
+      <NavBar class="relative z-20 max-w-4xl mx-auto" />
 
-      <FlickeringGrid
-        class="fixed inset-0 z-10 [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]"
-        :square-size="isLargeScreen ? 4 : 2"
-        :grid-gap="isLargeScreen ? 4 : 2"
-        color="#60A5FA"
-        :max-opacity="isLargeScreen ? 0.3 : 0.2"
-        :flicker-chance="0.1" />
-
-      <div class="relative z-10 max-w-3xl mx-auto border-0 py-16 px-4 lg:px-0">
+      <div class="relative z-10 max-w-4xl mx-auto border-0 pt-16 px-4 lg:px-0">
         <div class="flex items-center gap-4">
           <img
             src="/casual.jpeg"
             alt="Alexander Gekov"
             class="w-14 h-14 rounded-full" />
           <div class="min-w-0">
-            <h1 class="text-2xl font-bold tracking-tight">Alexander Gekov</h1>
-            <p class="text-sm text-muted-foreground mt-1">
-              GitHub · Twitter · YouTube · LinkedIn
-            </p>
+            <h1 class="">
+              <HyperText
+                text="Alexander Gekov"
+                class="text-2xl font-bold tracking-tight"
+                :duration="800"
+                :animate-on-load="true"
+              />
+            </h1>
+            <div class="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
+              <NuxtLink to="https://github.com/alexander-gekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">GitHub</NuxtLink>
+              <span class="text-muted-foreground/50">/</span>
+              <NuxtLink to="https://twitter.com/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">Twitter</NuxtLink>
+              <span class="text-muted-foreground/50">/</span>
+              <NuxtLink to="https://youtube.com/@alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">YouTube</NuxtLink>
+              <span class="text-muted-foreground/50">/</span>
+              <NuxtLink to="https://linkedin.com/in/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">LinkedIn</NuxtLink>
+            </div>
           </div>
         </div>
 
-        <p class="text-sm text-muted-foreground mt-6">
-          Co-Founder @ TalentSight | Software Engineer | AI Enthusiast Helping
-          Recruiters Succeed
-        </p>
-        <p class="text-sm text-muted-foreground mt-6">
-          I am currently working on
+       
+        <p class="text-sm text-muted-foreground mt-6 max-w-1/2">
+          Currently working on 
           <LinkPreview
             url="https://talsight.com"
             class="w-fit font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
-            <div class="flex items-center">
+            <div class="flex items-center px-2">
               <img
                 src="/logo-light.svg"
                 alt="TalentSight Logo"
                 class="w-5 h-5 mr-2 dark:invert" />
               TalentSight
             </div></LinkPreview
-          >, an AI-driven recruitment platform designed to help recruiters save
-          hours of manual work in terms of sourcing and outreach.
+          > , an AI recruitment platform that automates sourcing and outreach.
         </p>
-        <div class="mt-10 space-y-12">
+        <div class="mt-10 mb-10 space-y-12">
           <section>
             <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
               Experience
@@ -54,14 +55,21 @@
                 v-for="experience in experiences"
                 :key="experience.company"
                 class="flex items-start justify-between gap-6">
-                <div class="min-w-0">
-                  <div class="text-sm font-semibold leading-tight">
-                    {{ experience.company }}
-                  </div>
-                  <div
-                    v-if="experience.title"
-                    class="mt-1 text-xs text-muted-foreground">
-                    {{ experience.title }}
+                <div class="flex items-start gap-3 min-w-0">
+                  <img
+                    v-if="experience.image"
+                    :src="experience.image"
+                    :alt="experience.company"
+                    class="w-5 h-5 mt-0.5 shrink-0 grayscale opacity-80" />
+                  <div class="min-w-0">
+                    <div class="text-sm font-semibold leading-tight">
+                      {{ experience.company }}
+                    </div>
+                    <div
+                      v-if="experience.title"
+                      class="mt-1 text-xs text-muted-foreground">
+                      {{ experience.title }}
+                    </div>
                   </div>
                 </div>
                 <div class="text-xs text-muted-foreground whitespace-nowrap">
@@ -70,24 +78,30 @@
               </div>
             </div>
           </section>
+        </div>
+      </div>
 
-          <section>
-            <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-              Projects
-            </div>
-            <ProjectsMarquee :projects="projects" :duration-seconds="48" />
-          </section>
+      <section class="relative z-10 w-full mb-10">
+        <div class="max-w-4xl mx-auto px-4 lg:px-0 mb-4">
+          <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
+            Projects
+          </div>
+        </div>
+        <ProjectsMarquee :projects="projects" :duration-seconds="48" />
+      </section>
 
-          <section>
-            <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-              Blog posts
-            </div>
-            <div class="mt-4 space-y-3">
-              <template v-if="blogPosts.length">
-                <div
-                  v-for="post in blogPosts"
-                  :key="post.title"
-                  class="flex items-center justify-between gap-6">
+      <div class="relative z-10 max-w-4xl mx-auto border-0 pb-16 px-4 lg:px-0">
+        <section>
+          <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
+            Blog posts
+          </div>
+          <div class="mt-4 space-y-3">
+            <template v-if="blogPosts && blogPosts.length">
+              <div
+                v-for="post in blogPosts"
+                :key="post.title"
+                class="flex items-center justify-between gap-6">
+                <div class="flex items-center gap-3 min-w-0">
                   <NuxtLink
                     :to="post.href"
                     external
@@ -96,17 +110,17 @@
                     class="text-sm font-semibold tracking-tight hover:underline underline-offset-4">
                     {{ post.title }}
                   </NuxtLink>
-                  <div class="text-xs text-muted-foreground whitespace-nowrap">
-                    {{ post.date }}
-                  </div>
                 </div>
-              </template>
-              <div v-else class="text-sm text-muted-foreground">
-                Writing soon.
+                <div class="text-xs text-muted-foreground whitespace-nowrap">
+                  {{ post.date }}
+                </div>
               </div>
+            </template>
+            <div v-else class="text-sm text-muted-foreground">
+              Writing soon.
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </div>
     </div>
   </ClientOnly>
@@ -196,17 +210,21 @@ const experiences = [
     company: "TalentSight Inc.",
     title: "Co-Founder & CTO",
     date: "Nov 2023 - Present",
+    image: "/talsight.png",
   },
   {
-    company: "OfficeRnd",
+    company: "OfficeRnD",
     title: "Frontend Developer",
     date: "Sep 2023 - Nov 2023",
+    image: "/officernd.png",
   },
   {
     company: "Axion Biosystems (formerly Cytosmart)",
+    title: "Software Engineer",
     date: "Nov 2020 - July 2023",
+    image: "/axion.png",
   },
 ];
 
-const blogPosts = [] as Array<{ title: string; href: string; date: string }>;
+const { data: blogPosts } = await useFetch<Array<{ title: string; href: string; date: string }>>('/api/blog-posts')
 </script>
