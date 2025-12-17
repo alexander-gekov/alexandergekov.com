@@ -1,15 +1,15 @@
 <template>
   <ClientOnly>
     <div class="relative w-full overflow-hidden bg-background font-sans">
-      <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-50 w-full">
+      <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
         <Band />
       </div>
-      <NavBar class="relative z-20 max-w-4xl mx-auto" />
+      <NavBar class="relative z-50 max-w-4xl mx-auto pointer-events-auto" />
 
-      <ProfileHeader />
+      <ProfileHeader class="z-50" />
 
-      <div class="relative z-10 max-w-4xl mx-auto border-0 px-4 lg:px-0">
-        <div class="mt-10 mb-16 space-y-20">
+      <div class="relative z-30 max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
+        <div class="mt-10 mb-16 space-y-20 pointer-events-auto">
           <ExperienceSection :experiences="experiences" />
           <DeveloperRelationsSection :items="developerRelations" />
         </div>
@@ -109,18 +109,21 @@ const experiences = [
     title: "Co-Founder & CTO",
     date: "Nov 2023 - Present",
     image: "/talsight.png",
+    description: "Building a platform to help companies find and hire the best talent through AI-powered matching and intelligent candidate screening.",
   },
   {
     company: "OfficeRnD",
     title: "Frontend Developer",
     date: "Sep 2023 - Nov 2023",
     image: "/officernd.png",
+    description: "Developing modern web applications for workspace management solutions using Vue.js and TypeScript.",
   },
   {
     company: "Axion Biosystems (formerly Cytosmart)",
     title: "Software Engineer",
     date: "Nov 2020 - July 2023",
     image: "/axion.png",
+    description: "Building software solutions for cell analysis and imaging systems, developing UIs for scientific instruments and data visualization tools.",
   },
 ];
 

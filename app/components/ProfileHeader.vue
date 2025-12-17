@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-10 max-w-4xl mx-auto border-0 xl:pt-8 px-4 lg:px-0">
+  <div class="relative z-50 max-w-4xl mx-auto border-0 xl:pt-8 px-4 lg:px-0 pointer-events-auto">
     <div class="flex items-center gap-4">
       <img
         src="/casual.jpeg"
