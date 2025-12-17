@@ -1,6 +1,9 @@
 <template>
   <ClientOnly>
     <div class="relative w-full overflow-hidden bg-background font-sans">
+      <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-50 w-full">
+        <Band />
+      </div>
       <NavBar class="relative z-20 max-w-4xl mx-auto" />
 
       <ProfileHeader />
@@ -23,6 +26,9 @@
 </template>
 
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
+
+const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
 
 const projects = [
   {

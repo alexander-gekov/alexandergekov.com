@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-10 max-w-4xl mx-auto border-0 xl:pt-10 px-4 lg:px-0">
+  <div class="relative z-10 max-w-4xl mx-auto border-0 xl:pt-8 px-4 lg:px-0">
     <div class="flex items-center gap-4">
       <img
         src="/casual.jpeg"
@@ -17,7 +17,7 @@
         <div class="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
           <NuxtLink to="https://github.com/alexander-gekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">GitHub</NuxtLink>
           <span class="text-muted-foreground/50">/</span>
-          <NuxtLink to="https://twitter.com/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">Twitter</NuxtLink>
+          <NuxtLink to="https://x.com/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">X</NuxtLink>
           <span class="text-muted-foreground/50">/</span>
           <NuxtLink to="https://youtube.com/@alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">YouTube</NuxtLink>
           <span class="text-muted-foreground/50">/</span>

@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "nuxt-lucide-icons",
     "@nuxt/image",
+    "@tresjs/nuxt",
   ],
   shadcn: {
     /**
