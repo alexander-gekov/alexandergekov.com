@@ -3,137 +3,26 @@
     <div class="relative w-full overflow-hidden bg-background font-sans">
       <NavBar class="relative z-20 max-w-4xl mx-auto" />
 
-      <div class="relative z-10 max-w-4xl mx-auto border-0 pt-16 px-4 lg:px-0">
-        <div class="flex items-center gap-4">
-          <img
-            src="/casual.jpeg"
-            alt="Alexander Gekov"
-            class="w-14 h-14 rounded-full" />
-          <div class="min-w-0">
-            <h1 class="">
-              <HyperText
-                text="Alexander Gekov"
-                class="text-2xl font-bold tracking-tight"
-                :duration="800"
-                :animate-on-load="true"
-              />
-            </h1>
-            <div class="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-              <NuxtLink to="https://github.com/alexander-gekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">GitHub</NuxtLink>
-              <span class="text-muted-foreground/50">/</span>
-              <NuxtLink to="https://twitter.com/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">Twitter</NuxtLink>
-              <span class="text-muted-foreground/50">/</span>
-              <NuxtLink to="https://youtube.com/@alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">YouTube</NuxtLink>
-              <span class="text-muted-foreground/50">/</span>
-              <NuxtLink to="https://linkedin.com/in/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">LinkedIn</NuxtLink>
-            </div>
-          </div>
-        </div>
+      <ProfileHeader />
 
-       
-        <p class="text-sm text-muted-foreground mt-6 max-w-1/2">
-          Currently working on 
-          <LinkPreview
-            url="https://talsight.com"
-            class="w-fit font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
-            <div class="flex items-center px-2">
-              <img
-                src="/logo-light.svg"
-                alt="TalentSight Logo"
-                class="w-5 h-5 mr-2 dark:invert" />
-              TalentSight
-            </div>
-            </LinkPreview
-          > , an AI recruitment platform that automates sourcing and outreach.
-        </p>
-        <div class="mt-10 mb-10 space-y-12">
-          <section>
-            <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-              Experience
-            </div>
-            <div class="mt-4 space-y-4">
-              <div
-                v-for="experience in experiences"
-                :key="experience.company"
-                class="flex items-start justify-between gap-6">
-                <div class="flex items-start gap-3 min-w-0">
-                  <img
-                    v-if="experience.image"
-                    :src="experience.image"
-                    :alt="experience.company"
-                    class="w-5 h-5 mt-0.5 shrink-0 grayscale opacity-80" />
-                  <div class="min-w-0">
-                    <div class="text-sm font-semibold leading-tight">
-                      {{ experience.company }}
-                    </div>
-                    <div
-                      v-if="experience.title"
-                      class="mt-1 text-xs text-muted-foreground">
-                      {{ experience.title }}
-                    </div>
-                  </div>
-                </div>
-                <div class="text-xs text-muted-foreground whitespace-nowrap">
-                  {{ experience.date }}
-                </div>
-              </div>
-            </div>
-          </section>
+      <div class="relative z-10 max-w-4xl mx-auto border-0 px-4 lg:px-0">
+        <div class="mt-10 mb-16 space-y-20">
+          <ExperienceSection :experiences="experiences" />
+          <DeveloperRelationsSection :items="developerRelations" />
         </div>
       </div>
 
-      <section class="relative z-10 w-full mb-10">
-        <div class="max-w-4xl mx-auto px-4 lg:px-0 mb-4">
-          <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-            Projects
-          </div>
-        </div>
-        <ProjectsMarquee :projects="projects" :duration-seconds="48" />
-      </section>
+      <ProjectsSection :projects="projects" />
 
-      <div class="relative z-10 max-w-4xl mx-auto border-0 pb-16 px-4 lg:px-0">
-        <section>
-          <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-            Blog posts
-          </div>
-          <div class="mt-4 space-y-3">
-            <template v-if="blogPosts && blogPosts.length">
-              <div
-                v-for="post in blogPosts"
-                :key="post.title"
-                class="flex items-center justify-between gap-6">
-                <div class="flex items-center gap-3 min-w-0">
-                  <NuxtLink
-                    :to="post.href"
-                    external
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-sm font-semibold tracking-tight hover:underline underline-offset-4">
-                    {{ post.title }}
-                  </NuxtLink>
-                </div>
-                <div class="text-xs text-muted-foreground whitespace-nowrap">
-                  {{ post.date }}
-                </div>
-              </div>
-            </template>
-            <div v-else class="text-sm text-muted-foreground">
-              Writing soon.
-            </div>
-          </div>
-        </section>
+      <div class="relative z-10 max-w-4xl mx-auto border-0 pb-16 px-4 lg:px-0 mt-16 space-y-20">
+        <BlogPostsSection :blog-posts="blogPosts" />
+        <ConferenceTalksSection :talks="conferenceTalks" />
       </div>
     </div>
   </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import { useMediaQuery } from "@vueuse/core";
-import HyperText from "~/components/ui/hyper-text/HyperText.vue";
-import LinkPreview from "~/components/ui/link-preview/LinkPreview.vue";
-
-const { value } = useColorMode();
-const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
 const projects = [
   {
@@ -226,6 +115,42 @@ const experiences = [
     title: "Software Engineer",
     date: "Nov 2020 - July 2023",
     image: "/axion.png",
+  },
+];
+
+const developerRelations = [
+  {
+    title: "Storyblok Ambassador",
+    description: "Creating YouTube videos, blog posts and helping in Discord",
+    date: "Apr 2023 - Apr 2024",
+  },
+  {
+    title: "Supabase Ambassador",
+    description: "Organising Supabase Meetups in Sofia",
+    date: "Jan 2025 - Present",
+  },
+  {
+    title: "Cursor Ambassador",
+    description: "Organising meetups and helping in Discord",
+    date: "November 2025 - Present",
+  },
+];
+
+const conferenceTalks = [
+  {
+    title: "Prefetch Strategies to Boost the Performance of Your Vue.JS App",
+    href: "https://gitnation.com/contents/prefetch-strategies-to-boost-the-performance-of-your-vuejs-app",
+    event: "Vue.js London 2023",
+  },
+  {
+    title: "AI in Vue using Vercel AI SDK + Cloudflare Workers",
+    href: "https://event.geekle.us/vue-25/vuep",
+    event: "Vue.js Global Summit 2025 AI Day",
+  },
+  {
+    title: "TanStack Query: Is this the best paradigm for Data Fetching?",
+    href: "https://event.geekle.us/vue-25/vuep",
+    event: "Vue.js Global Summit 2025 Vue Day",
   },
 ];
 
