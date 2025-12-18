@@ -8,7 +8,7 @@
 
       <ProfileHeader class="z-50" />
 
-      <div class="relative z-30 max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
+      <div class="relative max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
         <div class="mt-10 mb-16 space-y-20 pointer-events-auto">
           <ExperienceSection :experiences="experiences" />
           <DeveloperRelationsSection :items="developerRelations" />
@@ -116,14 +116,14 @@ const experiences = [
     title: "Frontend Developer",
     date: "Sep 2023 - Nov 2023",
     image: "/officernd.png",
-    description: "Developing modern web applications for workspace management solutions using Vue.js and TypeScript.",
+    description: "Developing modern web applications for workspace management solutions using React, Redux and TypeScript.",
   },
   {
     company: "Axion Biosystems (formerly Cytosmart)",
     title: "Software Engineer",
     date: "Nov 2020 - July 2023",
     image: "/axion.png",
-    description: "Building software solutions for cell analysis and imaging systems, developing UIs for scientific instruments and data visualization tools.",
+    description: "Building software solutions for cell analysis and imaging systems, developing UIs for scientific instruments and data visualization tools using Vue.js and TypeScript and WebGL.",
   },
 ];
 

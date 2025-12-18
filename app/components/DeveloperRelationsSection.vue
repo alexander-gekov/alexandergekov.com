@@ -3,7 +3,7 @@
     <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
       Developer Relations
     </div>
-    <div class="mt-6 space-y-6">
+    <div class="mt-4 space-y-6">
       <div
         v-for="item in items"
         :key="item.title"
@@ -15,12 +15,12 @@
             :alt="item.title"
             class="w-5 h-5 mt-0.5 shrink-0 grayscale opacity-80" />
           <div class="min-w-0">
-            <div class="text-sm font-semibold leading-tight">
+            <div class="text-sm font-semibold leading-tight w-fit z-50 relative">
               {{ item.title }}
             </div>
             <div
               v-if="item.description"
-              class="mt-1 text-xs text-muted-foreground">
+              class="mt-1 text-xs text-muted-foreground w-fit z-50 relative">
               {{ item.description }}
             </div>
           </div>

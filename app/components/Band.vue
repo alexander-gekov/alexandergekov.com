@@ -79,21 +79,6 @@ const animate = () => {
 
   world.step()
 
-  if (j1Body && j2Body && j3Body) {
-    const j1Vel = j1Body.linvel()
-    const j2Vel = j2Body.linvel()
-    const j3Vel = j3Body.linvel()
-    
-    if (Math.abs(j1Vel.x) < 0.01 && Math.abs(j1Vel.y) < 0.01 && Math.abs(j1Vel.z) < 0.01) {
-      j1Body.setLinvel({ x: 0, y: 0, z: 0 }, true)
-    }
-    if (Math.abs(j2Vel.x) < 0.01 && Math.abs(j2Vel.y) < 0.01 && Math.abs(j2Vel.z) < 0.01) {
-      j2Body.setLinvel({ x: 0, y: 0, z: 0 }, true)
-    }
-    if (Math.abs(j3Vel.x) < 0.01 && Math.abs(j3Vel.y) < 0.01 && Math.abs(j3Vel.z) < 0.01) {
-      j3Body.setLinvel({ x: 0, y: 0, z: 0 }, true)
-    }
-  }
 
   if (j3Body && j2Body && j1Body && fixedBody && cardBody) {
     const j3Pos = j3Body.translation()
@@ -210,22 +195,22 @@ onMounted(async () => {
 
   const j1BodyDesc = RAPIER.RigidBodyDesc.dynamic()
     .setTranslation(xOffset, 1.12 * scale, 0.0)
-    .setLinearDamping(4.0)
-    .setAngularDamping(4.0)
+    .setLinearDamping(2.0)
+    .setAngularDamping(2.0)
   j1Body = world.createRigidBody(j1BodyDesc)
   world.createCollider(RAPIER.ColliderDesc.ball(0.056 * scale), j1Body)
 
   const j2BodyDesc = RAPIER.RigidBodyDesc.dynamic()
     .setTranslation(xOffset + 0.105 * scale, 0.63 * scale, 0.0)
-    .setLinearDamping(4.0)
-    .setAngularDamping(4.0)
+    .setLinearDamping(2.0)
+    .setAngularDamping(2.0)
   j2Body = world.createRigidBody(j2BodyDesc)
   world.createCollider(RAPIER.ColliderDesc.ball(0.056 * scale), j2Body)
 
   const j3BodyDesc = RAPIER.RigidBodyDesc.dynamic()
     .setTranslation(xOffset + 0.175 * scale, 0.14 * scale, 0.0)
-    .setLinearDamping(4.0)
-    .setAngularDamping(4.0)
+    .setLinearDamping(2.0)
+    .setAngularDamping(2.0)
   j3Body = world.createRigidBody(j3BodyDesc)
   world.createCollider(RAPIER.ColliderDesc.ball(0.056 * scale), j3Body)
 
@@ -252,8 +237,8 @@ onMounted(async () => {
 
   const cardBodyDesc = RAPIER.RigidBodyDesc.dynamic()
     .setTranslation(xOffset + 0.6 * scale, -1.0 * scale, 0.0)
-    .setLinearDamping(3.5)
-    .setAngularDamping(3.5)
+    .setLinearDamping(2.0)
+    .setAngularDamping(2.0)
   cardBody = world.createRigidBody(cardBodyDesc)
   world.createCollider(RAPIER.ColliderDesc.cuboid(0.4 * scale * cardScale, 4, 0.007 * scale), cardBody)
 

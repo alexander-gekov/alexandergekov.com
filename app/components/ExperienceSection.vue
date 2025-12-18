@@ -8,40 +8,40 @@
         v-for="(experience, index) in experiences"
         :key="experience.company"
         class="group cursor-pointer"
-        @mouseenter="hoveredIndex = index"
-        @mouseleave="hoveredIndex = null">
-        <div class="flex items-start justify-between gap-6">
-          <div class="flex items-start gap-3 min-w-0 flex-1">
+        @click="hoveredIndex = hoveredIndex === index ? null : index">
+        <div class="flex items-start justify-between gap-6 xl:gap-12">
+          <div class="flex items-start gap-3 min-w-0 w-fit">
             <img
               v-if="experience.image"
               :src="experience.image"
               :alt="experience.company"
               class="w-5 h-5 mt-0.5 shrink-0 grayscale opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-            <div class="min-w-0 flex-1">
-              <div class="text-sm font-semibold leading-tight">
+            <div class="min-w-0 w-fit">
+              <div class="text-sm font-semibold leading-tight  z-50 relative w-fit">
                 {{ experience.company }}
               </div>
               <div
                 v-if="experience.title"
-                class="mt-1 text-xs text-muted-foreground">
+                class="mt-1 text-xs text-muted-foreground z-50 relative w-fit">
                 {{ experience.title }}
               </div>
-              <Transition
-                enter-active-class="transition-all duration-300 ease-out"
-                enter-from-class="opacity-0 max-h-0 mt-0"
-                enter-to-class="opacity-100 max-h-96 mt-2"
-                leave-active-class="transition-all duration-300 ease-in"
-                leave-from-class="opacity-100 max-h-96 mt-2"
-                leave-to-class="opacity-0 max-h-0 mt-0">
-                <div
-                  v-if="experience.description && hoveredIndex === index"
-                  class="text-xs text-muted-foreground leading-relaxed overflow-hidden">
+              <div
+                v-if="experience.description"
+                class="overflow-hidden will-change-[max-height,opacity,margin-top] max-w-1/2"
+                :class="hoveredIndex === index ? 'max-h-[500px] opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'"
+                :style="{
+                  transitionProperty: 'max-height, opacity, margin-top',
+                  transitionDuration: hoveredIndex === index ? '400ms, 350ms, 350ms' : '350ms, 200ms, 350ms',
+                  transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                  transitionDelay: hoveredIndex === index ? '0ms, 50ms, 0ms' : '0ms, 0ms, 0ms'
+                }">
+                <div class="text-xs text-muted-foreground leading-relaxed z-50 relative">
                   {{ experience.description }}
                 </div>
-              </Transition>
+              </div>
             </div>
           </div>
-          <div class="text-xs text-muted-foreground whitespace-nowrap">
+          <div class="text-xs text-muted-foreground whitespace-nowrap shrink-0">
             {{ experience.date }}
           </div>
         </div>

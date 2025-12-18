@@ -1,29 +1,38 @@
 <template>
   <div class="relative z-50 max-w-4xl mx-auto border-0 xl:pt-8 px-4 lg:px-0 pointer-events-auto">
-    <div class="flex items-center gap-4">
-      <img
-        src="/casual.jpeg"
-        alt="Alexander Gekov"
-        class="w-14 h-14 rounded-full" />
-      <div class="min-w-0">
-        <h1 class="">
-          <HyperText
-            text="Alexander Gekov"
-            class="text-2xl font-bold tracking-tight"
-            :duration="800"
-            :animate-on-load="true"
-          />
-        </h1>
-        <div class="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-          <NuxtLink to="https://github.com/alexander-gekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">GitHub</NuxtLink>
-          <span class="text-muted-foreground/50">/</span>
-          <NuxtLink to="https://x.com/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">X</NuxtLink>
-          <span class="text-muted-foreground/50">/</span>
-          <NuxtLink to="https://youtube.com/@alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">YouTube</NuxtLink>
-          <span class="text-muted-foreground/50">/</span>
-          <NuxtLink to="https://linkedin.com/in/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">LinkedIn</NuxtLink>
+    <div class="flex items-start justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <img
+          src="/casual.jpeg"
+          alt="Alexander Gekov"
+          class="w-14 h-14 rounded-full" />
+        <div class="min-w-0">
+          <h1 class="">
+            <HyperText
+              text="Alexander Gekov"
+              class="text-2xl font-bold tracking-tight"
+              :duration="800"
+              :animate-on-load="true"
+            />
+          </h1>
+          <div class="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
+            <NuxtLink to="https://github.com/alexander-gekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">GitHub</NuxtLink>
+            <span class="text-muted-foreground/50">/</span>
+            <NuxtLink to="https://x.com/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">X</NuxtLink>
+            <span class="text-muted-foreground/50">/</span>
+            <NuxtLink to="https://youtube.com/@alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">YouTube</NuxtLink>
+            <span class="text-muted-foreground/50">/</span>
+            <NuxtLink to="https://linkedin.com/in/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">LinkedIn</NuxtLink>
+          </div>
         </div>
       </div>
+      <Button v-if="isDesktop"
+        variant="outline"
+        size="sm"
+        @click="downloadResume"
+      >
+        View Resume
+      </Button>
     </div>
 
     <p class="text-sm text-muted-foreground mt-6 xl:max-w-1/2">
@@ -41,9 +50,30 @@
       </LinkPreview>
       , an AI recruitment platform that automates sourcing and outreach.
     </p>
+
+    <Button v-if="!isDesktop"
+        variant="default"
+        class="mt-6"
+        size="sm"
+        @click="downloadResume"
+      >
+        View Resume
+      </Button>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
+
+const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
+
+const downloadResume = () => {
+  const link = document.createElement('a')
+  link.href = '/Alexander_Gekov_CV_2026.pdf'
+  link.download = 'Alexander_Gekov_CV_2026.pdf'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
 </script>
 
