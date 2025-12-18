@@ -18,7 +18,7 @@
             {{ talk.title }}
           </NuxtLink>
         </div>
-        <div class="text-xs text-muted-foreground whitespace-nowrap">
+        <div class="text-xs text-muted-foreground text-end">
           {{ talk.event }}
         </div>
       </div>

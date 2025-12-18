@@ -27,7 +27,7 @@
               </div>
               <div
                 v-if="experience.description"
-                class="overflow-hidden will-change-[max-height,opacity,margin-top] max-w-1/2"
+                class="overflow-hidden will-change-[max-height,opacity,margin-top] xl:max-w-1/2"
                 :class="hoveredIndex === index ? 'max-h-[500px] opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'"
                 :style="{
                   transitionProperty: 'max-height, opacity, margin-top',
