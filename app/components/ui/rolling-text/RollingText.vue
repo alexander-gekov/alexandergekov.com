@@ -1,7 +1,8 @@
 <template>
   <span
     ref="containerRef"
-    class="inline-flex cursor-pointer"
+    class="inline-flex cursor-none"
+    @mousemove="onMouseMove"
   >
     <span
       v-for="(char, i) in characters"
@@ -25,6 +26,22 @@
         </span>
       </span>
     </span>
+
+    <Teleport to="body">
+      <span
+        class="pointer-events-none fixed z-[9999] rounded-full border-2 border-primary"
+        :class="isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-50'"
+        :style="{
+          width: '1em',
+          height: '1em',
+          fontSize: 'inherit',
+          left: `${smoothX}px`,
+          top: `${smoothY}px`,
+          transform: 'translate(-50%, -50%)',
+          transition: 'opacity 0.2s ease, transform 0.2s ease'
+        }"
+      />
+    </Teleport>
   </span>
 </template>
 
@@ -55,4 +72,33 @@ function getDelay(index: number): string {
     : props.text.length - 1 - index
   return `${effectiveIndex * props.staggerDelay}s`
 }
+
+const mouseX = ref(0)
+const mouseY = ref(0)
+const smoothX = ref(0)
+const smoothY = ref(0)
+
+function onMouseMove(e: MouseEvent) {
+  mouseX.value = e.clientX
+  mouseY.value = e.clientY
+}
+
+let animationId: number | null = null
+
+function animate() {
+  const ease = 0.15
+  smoothX.value += (mouseX.value - smoothX.value) * ease
+  smoothY.value += (mouseY.value - smoothY.value) * ease
+  animationId = requestAnimationFrame(animate)
+}
+
+onMounted(() => {
+  animationId = requestAnimationFrame(animate)
+})
+
+onUnmounted(() => {
+  if (animationId) {
+    cancelAnimationFrame(animationId)
+  }
+})
 </script>
