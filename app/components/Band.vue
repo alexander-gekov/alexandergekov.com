@@ -40,6 +40,7 @@ let resizeObserver: ResizeObserver | null = null
 let cardMesh: THREE.Mesh | null = null
 let bandMaterialInstance: any = null
 let startTime: number | null = null
+let initialScale: number = 0.65
 
 const animate = () => {
   if (!world || !scene || !camera || !renderer) {
@@ -102,7 +103,7 @@ const animate = () => {
       cardBody.setAngvel({ x: ang.x, y: ang.y - euler.y * 0.1, z: ang.z }, true)
     }
 
-    curve.points[0]!.set(cardPos.x, cardPos.y + 0.6 * 0.65 * 1.2, cardPos.z)
+    curve.points[0]!.set(cardPos.x, cardPos.y + 0.6 * initialScale * 1.2, cardPos.z)
     curve.points[1]!.set(j3Pos.x, j3Pos.y, j3Pos.z)
     curve.points[2]!.set(j2Pos.x, j2Pos.y, j2Pos.z)
     curve.points[3]!.set(j1Pos.x, j1Pos.y, j1Pos.z)
@@ -151,10 +152,21 @@ onMounted(async () => {
     return normalizedX * 2
   }
 
+  const getScale = () => {
+    const canvasHeight = height.value || (canvasRef.value ? canvasRef.value.getBoundingClientRect().height : window.innerHeight)
+    if (canvasHeight >= 1440) {
+      return 0.4
+    }
+    if (canvasHeight >= 1080) {
+      return 0.5
+    }
+    return 0.65
+  }
+
   const updateCameraPosition = () => {
     if (!camera) return
     const xOffset = getXOffset()
-    const scale = 0.65
+    const scale = getScale()
     camera.position.set(xOffset + 0.6 * scale, 0.5, 4.2)
     camera.lookAt(xOffset + 0.6 * scale, -0.2, 0)
   }
@@ -186,7 +198,8 @@ onMounted(async () => {
 
   world = new RAPIER.World({ x: 0.0, y: -7.81, z: 0.0 })
 
-  const scale = 0.65
+  initialScale = getScale()
+  const scale = initialScale
   const cardScale = 1.2
   const xOffset = getXOffset()
 
