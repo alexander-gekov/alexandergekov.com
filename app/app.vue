@@ -21,6 +21,8 @@
         <BlogPostsSection :blog-posts="blogPosts" />
         <ConferenceTalksSection :talks="conferenceTalks" />
       </div>
+
+      <UIExperiencesSection :embeds="uiExperiences" />
     </div>
   </ClientOnly>
 </template>
@@ -164,4 +166,17 @@ const conferenceTalks = [
 ];
 
 const { data: blogPosts } = await useFetch<Array<{ title: string; href: string; date: string }>>('/api/blog-posts')
+
+const uiExperiences = [
+  {
+    id: 'text-roll-effect',
+    src: 'https://codesandbox.io/embed/3y2mmg?view=preview&hidenavigation=1',
+    title: 'Text Roll Effect',
+  },
+  {
+    id: 'mask-cursor-effect',
+    src: 'https://codesandbox.io/embed/8z8p2q?view=preview&hidenavigation=1',
+    title: 'Mask Cursor Effect',
+  },
+]
 </script>
