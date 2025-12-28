@@ -17,8 +17,11 @@
               :alt="experience.company"
               class="w-5 h-5 mt-0.5 shrink-0 grayscale opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
             <div class="min-w-0 w-fit">
-              <div class="text-sm font-semibold leading-tight  z-50 relative w-fit">
-                {{ experience.company }}
+              <div class="text-sm font-semibold leading-tight z-50 relative w-fit">
+                <RollingText
+                  :text="experience.company"
+                  from-class="text-foreground"
+                  to-class="text-primary" />
               </div>
               <div
                 v-if="experience.title"
