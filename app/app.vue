@@ -103,6 +103,13 @@ const projects = [
     github: "https://github.com/alexander-gekov/mrtnz.cc",
     demo: "https://mrtnz.cc",
   },
+  {
+    name: "Wedding Website",
+    description:
+      "My personal wedding website built with React, Next.js and Framer Motion. Features custom cursor, parallax effects, smooth animations, RSVP system and bilingual support.",
+    image: "/wedding-website.png",
+    demo: "https://www.alexandellie.love/en/",
+  },
 ];
 
 const experiences = [
