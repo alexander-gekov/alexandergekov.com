@@ -147,28 +147,55 @@ onMounted(async () => {
   fill.position.set(-3.5, 2.0, 4)
   scene.add(fill)
 
-  const getXOffset = () => {
-    const normalizedX = (0.62 - 0.5) * 2
-    return normalizedX * 2
-  }
+  const PHYSICS_SCALE = 0.5
+  const PHYSICS_X_OFFSET = 0.5
 
-  const getScale = () => {
+  const getResponsiveCamera = () => {
     const canvasHeight = height.value || (canvasRef.value ? canvasRef.value.getBoundingClientRect().height : window.innerHeight)
-    if (canvasHeight >= 1440) {
-      return 0.4
-    }
-    if (canvasHeight >= 1080) {
-      return 0.5
-    }
-    return 0.65
+    const canvasWidth = width.value || (canvasRef.value ? canvasRef.value.getBoundingClientRect().width : window.innerWidth)
+    
+    const refHeight = 900
+    const heightRatio = canvasHeight / refHeight
+    
+    const baseFov = 35
+    // Reduce FOV increase to minimize perspective distortion (foreshortening)
+    const fov = baseFov + Math.max(0, (heightRatio - 1) * 5) // Was 15. Drastically reduced to keep view flatter.
+    
+    const baseZ = 4.2
+    // Move camera further back to compensate for lower FOV and keep objects small enough
+    const cameraZ = baseZ + Math.max(0, (heightRatio - 1) * 2.0) // Was 1.5. Increased to move further away.
+    
+    // Horizontal positioning:
+    // Object is roughly at x=0.8. To put it on the right, we look to the left of it.
+    const targetX = PHYSICS_X_OFFSET + 0.1 // Was -0.2. Adjusted to move band left (closer to center)
+    // Move camera left on wider screens to push object further right
+    const cameraX = targetX - Math.max(0, (canvasWidth / canvasHeight) - 1.5) * 0.4 // Was 0.5. Reduced to pull back left slightly
+    
+    // Vertical positioning:
+    // Move camera DOWN on taller screens to make the object appear HIGHER (at the top)
+    const baseCameraY = 0.5
+    // Use a power curve to boost the effect for smaller height increases (like 1080p)
+    // while maintaining the effect for larger ones
+    const heightFactor = Math.max(0, heightRatio - 1)
+    const boostedFactor = Math.pow(heightFactor, 0.7) * 0.8 // Reduced from 1.7 because further camera requires less vertical shift
+    
+    // Add small fixed offset to ensure connection at top
+    const cameraY = baseCameraY - boostedFactor - 0.1
+    
+    const baseLookAtY = -0.2
+    const lookAtY = baseLookAtY - boostedFactor - 0.1
+    
+    return { fov, cameraZ, cameraX, cameraY, targetX, lookAtY }
   }
 
   const updateCameraPosition = () => {
     if (!camera) return
-    const xOffset = getXOffset()
-    const scale = getScale()
-    camera.position.set(xOffset + 0.6 * scale, 0.5, 4.2)
-    camera.lookAt(xOffset + 0.6 * scale, -0.2, 0)
+    const { fov, cameraZ, cameraX, cameraY, targetX, lookAtY } = getResponsiveCamera()
+    
+    camera.fov = fov
+    camera.updateProjectionMatrix()
+    camera.position.set(cameraX, cameraY, cameraZ)
+    camera.lookAt(targetX, lookAtY, 0)
   }
 
   const syncSize = () => {
@@ -198,10 +225,10 @@ onMounted(async () => {
 
   world = new RAPIER.World({ x: 0.0, y: -7.81, z: 0.0 })
 
-  initialScale = getScale()
-  const scale = initialScale
+  initialScale = PHYSICS_SCALE
+  const scale = PHYSICS_SCALE
   const cardScale = 1.2
-  const xOffset = getXOffset()
+  const xOffset = PHYSICS_X_OFFSET
 
   const fixedBodyDesc = RAPIER.RigidBodyDesc.fixed().setTranslation(xOffset + 1.1 * scale, 2.0 * scale, 0)
   fixedBody = world.createRigidBody(fixedBodyDesc)

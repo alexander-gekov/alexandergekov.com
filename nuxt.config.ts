@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     "nuxt-lucide-icons",
     "@nuxt/image",
     "@tresjs/nuxt",
+    "motion-v/nuxt",
   ],
   shadcn: {
     /**

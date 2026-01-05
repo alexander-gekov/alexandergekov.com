@@ -1,6 +1,7 @@
 <template>
   <ClientOnly>
     <div class="relative w-full overflow-hidden bg-background font-sans">
+      <GridBackground />
       <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
         <Band />
       </div>
