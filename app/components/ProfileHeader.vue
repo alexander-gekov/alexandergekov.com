@@ -69,8 +69,8 @@ const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
 
 const downloadResume = () => {
   const link = document.createElement('a')
-  link.href = '/Alexander_Gekov_CV_Product.pdf'
-  link.download = 'Alexander_Gekov_CV_Product.pdf'
+  link.href = '/Alexander_Gekov_CV_Product_One_Page.pdf'
+  link.download = 'Alexander_Gekov_CV_Product_One_Page.pdf'
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)

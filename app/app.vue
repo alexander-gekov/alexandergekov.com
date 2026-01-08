@@ -163,12 +163,12 @@ const conferenceTalks = [
   },
   {
     title: "AI in Vue using Vercel AI SDK + Cloudflare Workers",
-    href: "https://event.geekle.us/vue-25/vuep",
+    href: "https://vimeo.com/reviews/b402bdb9-1636-472e-b101-0f65f3d9b765/videos/1086311030",
     event: "Vue.js Global Summit 2025 AI Day",
   },
   {
     title: "TanStack Query: Is this the best paradigm for Data Fetching?",
-    href: "https://event.geekle.us/vue-25/vuep",
+    href: "https://vimeo.com/reviews/b402bdb9-1636-472e-b101-0f65f3d9b765/videos/1086311030",
     event: "Vue.js Global Summit 2025 Vue Day",
   },
 ];
