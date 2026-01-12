@@ -8,6 +8,13 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         { href: 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap', rel: 'stylesheet' }
+      ],
+      script: [
+        {
+          src: 'https://plausible.alexandergekov.com/js/script.file-downloads.js',
+          defer: true,
+          'data-domain': 'alexandergekov.com'
+        }
       ]
     }
   },
