@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <div class="relative w-full overflow-hidden bg-background font-sans">
-      <GridBackground />
+      <PageBorder />
       <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
         <Band />
       </div>
@@ -18,12 +18,11 @@
 
       <ProjectsSection :projects="projects" />
 
-      <div class="relative z-10 max-w-4xl mx-auto border-0 pb-16 px-4 lg:px-0 mt-16 space-y-20">
+      <div class="relative z-10 max-w-4xl mx-auto border-0 pb-32 px-4 lg:px-0 mt-16 space-y-20">
         <BlogPostsSection :blog-posts="blogPosts" />
         <ConferenceTalksSection :talks="conferenceTalks" />
+        <CodeSnippetsSection :snippets="codeSnippets" />
       </div>
-
-      <UIExperiencesSection :embeds="uiExperiences" />
     </div>
   </ClientOnly>
 </template>
@@ -37,28 +36,35 @@ const projects = [
   {
     name: "PriceBarometer",
     description:
-      "Price Barometer is a platform to track prices of products from supermarkets like Billa, Lidl, Kaufland, Fantastiko, etc.",
+      "A platform to track prices of products from supermarkets.",
     image: "/price-barometer.png",
     demo: "https://price-barometer.vercel.app/",
   },
   {
     name: "Pawns",
     description:
-      "Pawns is an open-source puzzle game. You need to fill in all the suns and moons to win.",
+      "An open-source puzzle game.",
     image: "/pawns.png",
     demo: "https://pawns.vercel.app/",
   },
   {
     name: "Horo",
     description:
-      "Horo is an open-source puzzle game. You need to fill in all the suns and moons to win.",
+      "An open-source puzzle game.",
     image: "/taengo.png",
     demo: "https://horo-game.vercel.app/",
   },
   {
+    name: "Stitch",
+    description:
+      "An open-source connect the dots puzzle game.",
+    image: "/ziip.png",
+    demo: "https://stitch-connect.vercel.app/",
+  },
+  {
     name: "Infinite Alchemy",
     description:
-      "Infinite Alchemy is a game where you can create new elements by combining existing ones.",
+      "A game where you can create new elements by combining existing ones.",
     image: "/infinitealchemy.png",
     github: "https://github.com/alexander-gekov/infinite-alchemy",
     demo: "https://infinitealche.my/",
@@ -66,23 +72,16 @@ const projects = [
   {
     name: "upstash-search-ui-vue",
     description:
-      "Beautifully-designed, accessible search components. Port of @upstash/search-ui for Vue.",
+      "Port of @upstash/search-ui for Vue.",
     image: "/upstash.png",
     github: "https://github.com/alexander-gekov/upstash-search-ui-vue",
     npm: "https://www.npmjs.com/package/upstash-search-ui-vue",
     demo: "https://upstash-search-ui-vue-demo.vercel.app/",
   },
   {
-    name: "Stitch",
-    description:
-      "Stitch is an open-source connect the doths Puzzle game. You need to connect the dots and fill all of the cells.",
-    image: "/ziip.png",
-    demo: "https://stitch-connect.vercel.app/",
-  },
-  {
     name: "a12v-stack",
     description:
-      "Modern Nuxt 3 App Boilerplate: Vue, Nuxt, Shadcn, Pinia, Tanstack Query, Zod, AI SDK, Clerk, Polar.sh, Supabase and more.",
+      "Modern Nuxt 3 App Boilerplate",
     image: "/a12v.png",
     github: "https://github.com/alexander-gekov/a12v-stack",
     npm: "https://www.npmjs.com/package/create-a12v-app",
@@ -91,7 +90,7 @@ const projects = [
   {
     name: "GitHubGarden",
     description:
-      "Interactive visualization of your GitHub contributions with 3D forest.",
+      "Interactive visualization of your GitHub contributions",
     image: "/githubgarden.png",
     github: "https://github.com/alexander-gekov/github-garden",
     demo: "https://github-garden.vercel.app/",
@@ -99,7 +98,7 @@ const projects = [
   {
     name: "mrtnz.cc",
     description:
-      "Platform for creating and sharing digital bracelets with friends for the Bulgarian Holiday - Baba Marta on 1st of March.",
+      "Platform for creating and sharing digital bracelets with friends",
     image: "/mrtnz.png",
     github: "https://github.com/alexander-gekov/mrtnz.cc",
     demo: "https://mrtnz.cc",
@@ -107,7 +106,7 @@ const projects = [
   {
     name: "Wedding Website",
     description:
-      "My personal wedding website built with React, Next.js and Framer Motion. Features custom cursor, parallax effects, smooth animations, RSVP system and bilingual support.",
+      "My personal wedding website built with React, Next.js and Framer Motion",
     image: "/wedding-website.png",
     demo: "https://www.alexandellie.love/en/",
   },
@@ -182,16 +181,16 @@ const conferenceTalks = [
 
 const { data: blogPosts } = await useFetch<Array<{ title: string; href: string; date: string }>>('/api/blog-posts')
 
-const uiExperiences = [
+const codeSnippets = [
   {
-    id: 'text-roll-effect',
-    src: 'https://codesandbox.io/embed/3y2mmg?view=preview&hidenavigation=1',
     title: 'Text Roll Effect',
+    href: 'https://codesandbox.io/s/3y2mmg',
+    platform: 'CodeSandbox',
   },
   {
-    id: 'mask-cursor-effect',
-    src: 'https://codesandbox.io/embed/8z8p2q?view=preview&hidenavigation=1',
     title: 'Mask Cursor Effect',
+    href: 'https://codesandbox.io/s/8z8p2q',
+    platform: 'CodeSandbox',
   },
 ]
 </script>
