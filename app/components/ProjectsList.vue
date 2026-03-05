@@ -53,11 +53,14 @@
             external
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm font-semibold tracking-tight hover:underline underline-offset-4"
+            class="text-sm font-semibold tracking-tight hover:underline underline-offset-4 shrink-0"
             @mouseenter="onEnter(project)"
             @mouseleave="onLeave">
             {{ project.name }}
           </NuxtLink>
+          <span class="text-sm text-muted-foreground truncate hidden sm:block">
+            {{ project.description }}
+          </span>
         </div>
 
         <!-- Right-side secondary links — every project has at least "Live" -->
