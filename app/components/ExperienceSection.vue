@@ -16,7 +16,7 @@
               v-if="experience.image"
               :src="experience.image"
               :alt="experience.company"
-              class="w-5 h-5 mt-0.5 shrink-0 grayscale opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+              class="h-5 w-auto max-w-16 object-contain mt-0.5 shrink-0 grayscale opacity-80 transition-opacity duration-300 group-hover:opacity-100"
               :class="hoveredIndex === index ? 'opacity-100 grayscale-0' : ''" />
             <div class="min-w-0 w-fit">
               <div class="flex items-center gap-2">

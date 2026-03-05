@@ -59,8 +59,7 @@
             class="w-5 h-5 mr-2 dark:invert" />
           TalentSight
         </div>
-      </LinkPreview>
-      .
+      </LinkPreview>.
     </p>
 
     <Button v-if="!isDesktop"
