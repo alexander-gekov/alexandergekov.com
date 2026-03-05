@@ -12,12 +12,13 @@
         @click="hoveredIndex = hoveredIndex === index ? null : index">
         <div class="flex items-start justify-between gap-6 xl:gap-12">
           <div class="flex items-start gap-3 min-w-0 w-fit">
-            <img
-              v-if="experience.image"
-              :src="experience.image"
-              :alt="experience.company"
-              class="h-5 w-auto max-w-16 object-contain mt-0.5 shrink-0 grayscale opacity-80 transition-opacity duration-300 group-hover:opacity-100"
-              :class="hoveredIndex === index ? 'opacity-100 grayscale-0' : ''" />
+            <div v-if="experience.image" class="w-6 shrink-0 mt-0.5 flex items-center justify-center">
+              <img
+                :src="experience.image"
+                :alt="experience.company"
+                class="h-5 w-auto max-w-6 object-contain grayscale opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+                :class="hoveredIndex === index ? 'opacity-100 grayscale-0' : ''" />
+            </div>
             <div class="min-w-0 w-fit">
               <div class="flex items-center gap-2">
                 <div class="text-sm font-semibold leading-tight z-50 relative w-fit group-hover:underline underline-offset-2 decoration-muted-foreground/50">
