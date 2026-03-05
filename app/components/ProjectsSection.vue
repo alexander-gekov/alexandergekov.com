@@ -1,11 +1,11 @@
 <template>
   <section class="relative z-50 w-full mb-16 pointer-events-auto">
-    <div class="max-w-4xl mx-auto px-4 lg:px-0 mb-6">
-      <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
+    <div class="max-w-4xl mx-auto px-4 lg:px-0">
+      <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase mb-6">
         Projects
       </div>
+      <ProjectsList :projects="projects" />
     </div>
-    <ProjectsMarquee :projects="projects" :duration-seconds="48" />
   </section>
 </template>
 
@@ -23,4 +23,3 @@ defineProps<{
   projects: Project[]
 }>()
 </script>
-
