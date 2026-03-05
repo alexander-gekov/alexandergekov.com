@@ -4,25 +4,42 @@
     @mouseleave="onLeave"
     @mousemove="onMouseMove">
 
-    <!-- Floating preview image that follows the cursor -->
-    <Teleport to="body">
-      <div
-        class="pointer-events-none fixed z-[9999] overflow-hidden rounded-xl shadow-2xl border border-border/50 bg-background"
-        :style="{
-          width: '340px',
-          left: `${currentX}px`,
-          top: `${currentY}px`,
-          opacity: activeProject ? 1 : 0,
-          transform: `translate(-50%, calc(-100% - 20px)) scale(${activeProject ? 1 : 0.92})`,
-          transition: 'opacity 0.22s ease, transform 0.22s ease',
-        }">
-        <img
-          v-if="shownProject"
-          :src="shownProject.image"
-          :alt="shownProject.name"
-          class="w-full aspect-[16/10] object-cover block" />
-      </div>
-    </Teleport>
+    <!--
+      Floating preview — disabled on Safari due to fixed+transform compositing issues.
+      Two overlapping image layers crossfade between projects without closing the popup.
+      The outer wrapper is moved via direct DOM transform (bypasses Vue reactivity for
+      max-frequency updates); the inner wrapper drives opacity/scale via CSS transition.
+    -->
+    <template v-if="!isSafari">
+      <Teleport to="body">
+        <div
+          ref="posEl"
+          class="pointer-events-none fixed z-[9999] will-change-transform"
+          style="top: 0; left: 0; width: 340px;">
+          <div
+            class="overflow-hidden rounded-xl shadow-2xl border border-border/50 bg-background"
+            :style="{
+              opacity: isVisible ? 1 : 0,
+              transform: `scale(${isVisible ? 1 : 0.92})`,
+              transition: 'opacity 0.22s ease, transform 0.22s ease',
+            }">
+            <!-- 16/10 aspect ratio container, padding-bottom = 10/16 * 100 -->
+            <div class="relative w-full" style="padding-bottom: 62.5%;">
+              <img
+                :src="imageA"
+                alt=""
+                class="absolute inset-0 w-full h-full object-cover"
+                :style="{ opacity: showingA ? 1 : 0, transition: 'opacity 0.3s ease' }" />
+              <img
+                :src="imageB"
+                alt=""
+                class="absolute inset-0 w-full h-full object-cover"
+                :style="{ opacity: showingA ? 0 : 1, transition: 'opacity 0.3s ease' }" />
+            </div>
+          </div>
+        </div>
+      </Teleport>
+    </template>
 
     <!-- Project list -->
     <div class="mt-6 space-y-5">
@@ -30,8 +47,7 @@
         v-for="project in projects"
         :key="project.name"
         class="flex items-start xl:items-center justify-between gap-6"
-        @mouseenter="activeProject = project; shownProject = project"
-        @mouseleave="activeProject = null">
+        @mouseenter="onEnter(project)">
 
         <div class="flex items-center gap-3 min-w-0">
           <NuxtLink
@@ -44,8 +60,18 @@
           </NuxtLink>
         </div>
 
-        <!-- Secondary links shown as small muted badges -->
+        <!-- Right-side secondary links — every project has at least "Live" -->
         <div class="flex items-center gap-2 shrink-0 text-xs text-muted-foreground">
+          <NuxtLink
+            v-if="project.demo"
+            :to="project.demo"
+            external
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-foreground transition-colors">
+            Live
+          </NuxtLink>
+          <span v-if="project.demo && project.github" class="opacity-30">·</span>
           <NuxtLink
             v-if="project.github"
             :to="project.github"
@@ -81,50 +107,104 @@ type Project = {
   demo?: string
 }
 
-defineProps<{
+const props = defineProps<{
   projects: Project[]
 }>()
 
-const activeProject = ref<Project | null>(null)
-const shownProject = ref<Project | null>(null)
+// Detect Safari at setup time (client-only; this component is inside <ClientOnly>).
+// Safari has known compositing issues with high-frequency fixed+transform updates.
+const isSafari = import.meta.client
+  ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+  : false
 
-const targetX = ref(0)
-const targetY = ref(0)
-const currentX = ref(0)
-const currentY = ref(0)
+// Template ref for the outer positioning wrapper (manipulated directly in RAF).
+const posEl = ref<HTMLElement | null>(null)
+
+// Plain JS variables — not Vue refs — to keep RAF-frequency updates off the
+// reactivity system and avoid unnecessary component re-renders every frame.
+let targetX = 0
+let targetY = 0
+let currentX = 0
+let currentY = 0
 let rafId: number | null = null
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 
 function tick() {
-  currentX.value = lerp(currentX.value, targetX.value, 0.12)
-  currentY.value = lerp(currentY.value, targetY.value, 0.12)
+  currentX = lerp(currentX, targetX, 0.12)
+  currentY = lerp(currentY, targetY, 0.12)
+  if (posEl.value) {
+    // Use transform (not left/top) so the browser can composite on the GPU
+    // without triggering layout reflow on every frame.
+    posEl.value.style.transform =
+      `translate(calc(${currentX}px - 50%), calc(${currentY}px - 100% - 20px))`
+  }
   rafId = requestAnimationFrame(tick)
 }
 
-onMounted(() => tick())
-onUnmounted(() => { if (rafId !== null) cancelAnimationFrame(rafId) })
+// Vue refs that drive CSS transitions (low-frequency, safe to be reactive).
+const isVisible = ref(false)
+const imageA = ref('')
+const imageB = ref('')
+const showingA = ref(true)
+
+function switchToImage(src: string) {
+  if (!isVisible.value) {
+    // First reveal: load both layers identically so no crossfade flicker.
+    imageA.value = src
+    imageB.value = src
+    showingA.value = true
+  } else if (showingA.value) {
+    imageB.value = src
+    showingA.value = false
+  } else {
+    imageA.value = src
+    showingA.value = true
+  }
+}
+
+function onEnter(project: Project) {
+  switchToImage(project.image)
+  isVisible.value = true
+}
+
+function onLeave() {
+  isVisible.value = false
+  setTimeout(() => {
+    if (!isVisible.value) {
+      imageA.value = ''
+      imageB.value = ''
+    }
+  }, 300)
+}
+
+function onMouseMove(e: MouseEvent) {
+  targetX = e.clientX
+  targetY = e.clientY
+}
+
+// Snap to the exact entry position so the card doesn't fly in from (0, 0).
+function onContainerEnter(e: MouseEvent) {
+  currentX = e.clientX
+  currentY = e.clientY
+  targetX = e.clientX
+  targetY = e.clientY
+}
 
 function primaryLink(project: Project): string {
   return project.demo ?? project.github ?? project.npm ?? '#'
 }
 
-function onMouseMove(e: MouseEvent) {
-  targetX.value = e.clientX
-  targetY.value = e.clientY
-}
+onMounted(() => {
+  // Preload all project images so crossfades are instant (no network latency).
+  props.projects.forEach(p => {
+    const img = new Image()
+    img.src = p.image
+  })
+  if (!isSafari) tick()
+})
 
-function onContainerEnter(e: MouseEvent) {
-  currentX.value = e.clientX
-  currentY.value = e.clientY
-  targetX.value = e.clientX
-  targetY.value = e.clientY
-}
-
-function onLeave() {
-  activeProject.value = null
-  setTimeout(() => {
-    if (!activeProject.value) shownProject.value = null
-  }, 250)
-}
+onUnmounted(() => {
+  if (rafId !== null) cancelAnimationFrame(rafId)
+})
 </script>
