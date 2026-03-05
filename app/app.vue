@@ -115,6 +115,13 @@ const projects = [
 
 const experiences = [
   {
+    company: "n8n",
+    title: "Software Engineer",
+    date: "Mar 2026 - Present",
+    image: "/n8n-icon.svg",
+    description: "Building and extending the n8n workflow automation platform, working on integrations, core features, and developer tooling.",
+  },
+  {
     company: "TalentSight Inc.",
     title: "Co-Founder & CTO",
     date: "Nov 2023 - Present",
