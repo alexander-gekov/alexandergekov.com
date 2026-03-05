@@ -1,7 +1,6 @@
 <template>
   <div
     @mouseenter="onContainerEnter"
-    @mouseleave="onLeave"
     @mousemove="onMouseMove">
 
     <!--
@@ -46,8 +45,7 @@
       <div
         v-for="project in projects"
         :key="project.name"
-        class="flex items-start xl:items-center justify-between gap-6"
-        @mouseenter="onEnter(project)">
+        class="flex items-start xl:items-center justify-between gap-6">
 
         <div class="flex items-center gap-3 min-w-0">
           <NuxtLink
@@ -55,7 +53,9 @@
             external
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm font-semibold tracking-tight hover:underline underline-offset-4">
+            class="text-sm font-semibold tracking-tight hover:underline underline-offset-4"
+            @mouseenter="onEnter(project)"
+            @mouseleave="onLeave">
             {{ project.name }}
           </NuxtLink>
         </div>
