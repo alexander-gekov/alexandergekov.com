@@ -36,10 +36,22 @@
     </div>
 
     <p class="text-sm text-muted-foreground mt-6 xl:max-w-1/2">
-      Currently working on 
+      Software Engineer at
+      <LinkPreview
+        url="https://n8n.io"
+        class="inline-flex items-center font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
+        <div class="flex items-center px-2">
+          <img
+            src="/n8n-icon.svg"
+            alt="n8n Logo"
+            class="w-4 h-4 mr-1.5" />
+          n8n
+        </div>
+      </LinkPreview>
+      , Co-Founder of
       <LinkPreview
         url="https://talsight.com"
-        class="w-fit font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
+        class="inline-flex items-center font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
         <div class="flex items-center px-2">
           <img
             src="/logo-light.svg"
@@ -48,7 +60,7 @@
           TalentSight
         </div>
       </LinkPreview>
-      , an AI recruitment platform that automates sourcing and outreach.
+      .
     </p>
 
     <Button v-if="!isDesktop"
