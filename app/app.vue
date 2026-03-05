@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <div class="relative w-full overflow-hidden bg-background font-sans">
-      <GridBackground />
+      <PageBorder />
       <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
         <Band />
       </div>
@@ -21,9 +21,8 @@
       <div class="relative z-10 max-w-4xl mx-auto border-0 pb-16 px-4 lg:px-0 mt-16 space-y-20">
         <BlogPostsSection :blog-posts="blogPosts" />
         <ConferenceTalksSection :talks="conferenceTalks" />
+        <CodeSnippetsSection :snippets="codeSnippets" />
       </div>
-
-      <UIExperiencesSection :embeds="uiExperiences" />
     </div>
   </ClientOnly>
 </template>
@@ -182,16 +181,16 @@ const conferenceTalks = [
 
 const { data: blogPosts } = await useFetch<Array<{ title: string; href: string; date: string }>>('/api/blog-posts')
 
-const uiExperiences = [
+const codeSnippets = [
   {
-    id: 'text-roll-effect',
-    src: 'https://codesandbox.io/embed/3y2mmg?view=preview&hidenavigation=1',
     title: 'Text Roll Effect',
+    href: 'https://codesandbox.io/s/3y2mmg',
+    platform: 'CodeSandbox',
   },
   {
-    id: 'mask-cursor-effect',
-    src: 'https://codesandbox.io/embed/8z8p2q?view=preview&hidenavigation=1',
     title: 'Mask Cursor Effect',
+    href: 'https://codesandbox.io/s/8z8p2q',
+    platform: 'CodeSandbox',
   },
 ]
 </script>
