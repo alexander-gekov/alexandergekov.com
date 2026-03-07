@@ -1,8 +1,8 @@
 <template>
   <!-- Vertical lines: fixed to the viewport, run full page height -->
   <div class="hidden lg:block fixed inset-0 pointer-events-none z-[10]" aria-hidden="true">
-    <div class="absolute inset-y-0 w-px bg-border" style="left: calc(50% - 32rem);" />
-    <div class="absolute inset-y-0 w-px bg-border" style="left: calc(50% + 32rem);" />
+    <div class="absolute inset-y-0 w-px bg-border" style="left: calc(50% - 22rem);" />
+    <div class="absolute inset-y-0 w-px bg-border" style="left: calc(50% + 22rem);" />
   </div>
 
   <!-- Horizontal lines: absolute so they scroll with the page -->

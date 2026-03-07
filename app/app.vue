@@ -64,7 +64,7 @@ const projects = [
   {
     name: "Infinite Alchemy",
     description:
-      "A game where you can create new elements by combining existing ones.",
+      "AI-powered Little Alchemy Clone.",
     image: "/infinitealchemy.png",
     github: "https://github.com/alexander-gekov/infinite-alchemy",
     demo: "https://infinitealche.my/",
@@ -106,7 +106,7 @@ const projects = [
   {
     name: "Wedding Website",
     description:
-      "My personal wedding website built with React, Next.js and Framer Motion",
+      "My own wedding website built with React, Next.js and Framer Motion",
     image: "/wedding-website.png",
     demo: "https://www.alexandellie.love/en/",
   },
