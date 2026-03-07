@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-50 max-w-4xl mx-auto border-0 xl:pt-8 px-4 lg:px-0 pointer-events-auto">
+  <div class="relative z-50 max-w-2xl mx-auto border-0 lg:pt-8 px-4 lg:px-0 pointer-events-auto">
     <div class="flex items-start justify-between gap-4">
       <div class="flex items-center gap-4">
         <img

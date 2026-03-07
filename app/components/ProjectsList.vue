@@ -45,22 +45,23 @@
       <div
         v-for="project in projects"
         :key="project.name"
-        class="flex items-start xl:items-center justify-between gap-6">
+        class="flex items-start justify-between gap-6">
 
-        <div class="flex items-center gap-3 min-w-0">
+        <div class="min-w-0 flex-1">
           <NuxtLink
             :to="primaryLink(project)"
             external
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm font-semibold tracking-tight hover:underline underline-offset-4 shrink-0"
+            class="inline-flex items-center gap-1 text-sm font-semibold tracking-tight hover:underline underline-offset-4"
             @mouseenter="onEnter(project)"
             @mouseleave="onLeave">
             {{ project.name }}
+            <LucideExternalLink class="w-3 h-3 shrink-0 opacity-60" />
           </NuxtLink>
-          <span class="text-sm text-muted-foreground truncate hidden sm:block">
+          <div class="mt-0.5 text-xs text-muted-foreground">
             {{ project.description }}
-          </span>
+          </div>
         </div>
 
         <!-- Right-side secondary links — every project has at least "Live" -->
@@ -101,6 +102,8 @@
 </template>
 
 <script setup lang="ts">
+import { LucideExternalLink } from 'lucide-vue-next'
+
 type Project = {
   name: string
   description: string
