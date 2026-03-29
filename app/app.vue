@@ -5,11 +5,11 @@
       <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
         <Band />
       </div>
-      <NavBar class="relative z-50 max-w-2xl mx-auto pointer-events-auto" />
+      <NavBar class="relative z-50 max-w-2xl 3xl:max-w-4xl mx-auto pointer-events-auto" />
 
       <ProfileHeader class="z-50" />
 
-      <div class="relative max-w-2xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
+      <div class="relative max-w-2xl 3xl:max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
         <div class="mt-10 mb-16 space-y-20 pointer-events-auto">
           <ExperienceSection :experiences="experiences" />
           <DeveloperRelationsSection :items="developerRelations" />
@@ -18,7 +18,7 @@
 
       <ProjectsSection :projects="projects" />
 
-      <div class="relative z-10 max-w-2xl mx-auto border-0 pb-32 px-4 lg:px-0 mt-16 space-y-20">
+      <div class="relative z-10 max-w-2xl 3xl:max-w-4xl mx-auto border-0 pb-32 px-4 lg:px-0 mt-16 space-y-20">
         <BlogPostsSection :blog-posts="blogPosts" />
         <ConferenceTalksSection :talks="conferenceTalks" />
         <CodeSnippetsSection :snippets="codeSnippets" />
