@@ -38,7 +38,7 @@ const projects = [
     description:
       "A platform to track prices of products from supermarkets.",
     image: "/price-barometer.png",
-    demo: "https://price-barometer.vercel.app/",
+    demo: "https://prices.alexandergekov.com/",
   },
   {
     name: "Pawns",
