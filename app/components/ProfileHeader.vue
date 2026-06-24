@@ -22,7 +22,7 @@
             <span class="text-muted-foreground/50">/</span>
             <NuxtLink to="https://youtube.com/@alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">YouTube</NuxtLink>
             <span class="text-muted-foreground/50">/</span>
-            <NuxtLink to="https://linkedin.com/in/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">LinkedIn</NuxtLink>
+            <NuxtLink to="https://linkedin.com/in/alexander-gekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">LinkedIn</NuxtLink>
           </div>
         </div>
       </div>
