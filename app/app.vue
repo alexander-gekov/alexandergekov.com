@@ -118,7 +118,7 @@ const experiences = [
     title: "Software Engineer",
     date: "Mar 2026 - Present",
     image: "/n8n-icon.svg",
-    description: "Building and extending the n8n workflow automation platform, working on integrations, core features, and developer tooling.",
+    description: "On the Relay team, contributing to n8n Connect — n8n's AI and Services Gateway.",
   },
   {
     company: "TalentSight Inc.",
