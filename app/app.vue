@@ -67,7 +67,7 @@ const projects = [
       "AI-powered Little Alchemy Clone.",
     image: "/infinitealchemy.png",
     github: "https://github.com/alexander-gekov/infinite-alchemy",
-    demo: "https://infinitealche.my/",
+    demo: "https://infinitealchemy.alexandergekov.com/",
   },
   {
     name: "upstash-search-ui-vue",
