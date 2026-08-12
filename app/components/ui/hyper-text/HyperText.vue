@@ -81,7 +81,7 @@ watch(
   },
 );
 
-if (props.animateOnLoad) {
+if (props.animateOnLoad && import.meta.client) {
   triggerAnimation();
 }
 </script>

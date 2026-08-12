@@ -1,5 +1,5 @@
 <template>
-  <div ref="root" :class="cn('relative inline-block', props.class)">
+  <span ref="root" :class="cn('relative inline-block', props.class)">
     <!-- Trigger -->
     <NuxtLink
       :to="url"
@@ -14,30 +14,33 @@
       <slot />
     </NuxtLink>
 
-    <!-- Preview -->
-    <div
-      v-if="isVisible"
-      class="pointer-events-none fixed z-50"
-      :style="previewStyle"
-    >
+    <!-- Preview: fixed-position, so it lives on the body rather than nested in
+         whatever inline context the trigger sits in. -->
+    <Teleport to="body">
       <div
-        class="overflow-hidden rounded-xl shadow-xl"
-        :class="[popClass, { 'transform-gpu': !props.isStatic }]"
+        v-if="isVisible"
+        class="pointer-events-none fixed z-50"
+        :style="previewStyle"
       >
-        <div class="block rounded-xl border border-border bg-popover p-1 shadow-lg">
-          <img
-            :src="previewSrc"
-            :width="width"
-            :height="height"
-            class="size-full rounded-lg object-cover"
-            :style="imageStyle"
-            alt=""
-            aria-hidden="true"
-          />
+        <div
+          class="overflow-hidden rounded-xl shadow-xl"
+          :class="[popClass, { 'transform-gpu': !props.isStatic }]"
+        >
+          <div class="block rounded-xl border border-border bg-popover p-1 shadow-lg">
+            <img
+              :src="previewSrc"
+              :width="width"
+              :height="height"
+              class="size-full rounded-lg object-cover"
+              :style="imageStyle"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </Teleport>
+  </span>
 </template>
 
 <script setup lang="ts">
@@ -76,6 +79,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const isVisible = ref(false);
+// The root is a span, not a div: this component is used inline inside a
+// paragraph, and a div there makes the HTML parser close the <p> early, so no
+// server-rendered markup could ever match the parsed DOM.
 const root = ref<HTMLElement | null>(null);
 const hasPopped = ref(false);
 const colorMode = useColorMode();

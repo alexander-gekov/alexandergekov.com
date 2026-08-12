@@ -17,6 +17,7 @@ const dragged = ref(false)
 const draggedOffset = ref<THREE.Vector3 | null>(null)
 const pointer = ref({ x: 0, y: 0 })
 const cardReleased = ref(false)
+const isSupported = ref(true)
 
 const curve = new THREE.CatmullRomCurve3([
   new THREE.Vector3(),
@@ -130,7 +131,17 @@ onMounted(async () => {
 
   scene = new THREE.Scene()
   camera = new THREE.PerspectiveCamera(35, 1, 0.1, 1000)
-  renderer = new THREE.WebGLRenderer({ canvas: canvasRef.value, alpha: true })
+
+  // WebGL is unavailable on some devices and can be disabled or blocked in the
+  // browser. The lanyard is decorative, so fail quietly instead of throwing out
+  // of the mounted hook and leaving the component half-initialised.
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvasRef.value, alpha: true })
+  } catch {
+    isSupported.value = false
+    return
+  }
+
   renderer.setClearColor(0x000000, 0)
   renderer.outputColorSpace = THREE.SRGBColorSpace
   renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -414,5 +425,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <canvas ref="canvasRef" class="w-full h-screen pointer-events-auto" />
+  <canvas
+    v-show="isSupported"
+    ref="canvasRef"
+    class="w-full h-screen pointer-events-auto" />
 </template>
