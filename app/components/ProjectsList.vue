@@ -9,7 +9,7 @@
       The outer wrapper is moved via direct DOM transform (bypasses Vue reactivity for
       max-frequency updates); the inner wrapper drives opacity/scale via CSS transition.
     -->
-    <template v-if="!isSafari">
+    <template v-if="isMounted && !isSafari">
       <Teleport to="body">
         <div
           ref="posEl"
@@ -59,42 +59,25 @@
             {{ project.name }}
             <LucideExternalLink class="w-3 h-3 shrink-0 opacity-60" />
           </NuxtLink>
-          <div class="mt-0.5 text-xs text-muted-foreground">
+          <p class="mt-0.5 text-xs text-muted-foreground">
             {{ project.description }}
-          </div>
+          </p>
         </div>
 
-        <!-- Right-side secondary links — every project has at least "Live" -->
-        <div class="flex items-center gap-2 shrink-0 text-xs text-muted-foreground">
-          <NuxtLink
-            v-if="project.demo"
-            :to="project.demo"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            Live
-          </NuxtLink>
-          <span v-if="project.demo && project.github" class="opacity-30">·</span>
-          <NuxtLink
-            v-if="project.github"
-            :to="project.github"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            GitHub
-          </NuxtLink>
-          <span v-if="project.github && project.npm" class="opacity-30">·</span>
-          <NuxtLink
-            v-if="project.npm"
-            :to="project.npm"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            NPM
-          </NuxtLink>
+        <!-- Right-side secondary links. Built from a filtered list so the
+             separators stay correct for any combination of links. -->
+        <div class="flex items-center gap-2 shrink-0 font-mono text-xs text-muted-foreground">
+          <template v-for="(link, index) in secondaryLinks(project)" :key="link.label">
+            <span v-if="index > 0" aria-hidden="true" class="text-muted-foreground/40">·</span>
+            <NuxtLink
+              :to="link.href"
+              external
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-foreground transition-colors">
+              {{ link.label }}
+            </NuxtLink>
+          </template>
         </div>
       </div>
     </div>
@@ -117,11 +100,11 @@ const props = defineProps<{
   projects: Project[]
 }>()
 
-// Detect Safari at setup time (client-only; this component is inside <ClientOnly>).
-// Safari has known compositing issues with high-frequency fixed+transform updates.
-const isSafari = import.meta.client
-  ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
-  : false
+// Safari has known compositing issues with high-frequency fixed+transform
+// updates. Resolved after mount so the server and the first client render
+// agree, then the preview layer is added in.
+const isSafari = ref(false)
+const isMounted = ref(false)
 
 // Template ref for the outer positioning wrapper (manipulated directly in RAF).
 const posEl = ref<HTMLElement | null>(null)
@@ -201,13 +184,24 @@ function primaryLink(project: Project): string {
   return project.demo ?? project.github ?? project.npm ?? '#'
 }
 
+function secondaryLinks(project: Project) {
+  return [
+    { label: 'Live', href: project.demo },
+    { label: 'GitHub', href: project.github },
+    { label: 'NPM', href: project.npm },
+  ].filter((link): link is { label: string; href: string } => Boolean(link.href))
+}
+
 onMounted(() => {
+  isSafari.value = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+  isMounted.value = true
+
   // Preload all project images so crossfades are instant (no network latency).
   props.projects.forEach(p => {
     const img = new Image()
     img.src = p.image
   })
-  if (!isSafari) tick()
+  if (!isSafari.value) tick()
 })
 
 onUnmounted(() => {

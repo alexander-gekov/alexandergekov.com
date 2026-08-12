@@ -1,30 +1,41 @@
 <template>
-  <ClientOnly>
-    <div class="relative w-full overflow-hidden bg-background font-sans">
-      <PageBorder />
-      <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
+  <div class="relative w-full overflow-hidden bg-background font-sans">
+    <PageBorder />
+
+    <!--
+      The lanyard is a full-height transparent canvas that paints above the
+      page. It is confined to the margin beside the content column so it can
+      never occlude the text (it used to cover the experience dates), and it
+      only mounts on the client because it drives WebGL + physics.
+    -->
+    <ClientOnly>
+      <div
+        v-if="isDesktop"
+        class="absolute top-0 right-0 z-40 pointer-events-none band-margin"
+        aria-hidden="true">
         <Band />
       </div>
-      <NavBar class="relative z-50 max-w-2xl 3xl:max-w-4xl mx-auto pointer-events-auto" />
+    </ClientOnly>
 
-      <ProfileHeader class="z-50" />
+    <NavBar class="relative z-50 max-w-2xl 3xl:max-w-4xl mx-auto pointer-events-auto" />
 
-      <div class="relative max-w-2xl 3xl:max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
-        <div class="mt-10 mb-16 space-y-20 pointer-events-auto">
-          <ExperienceSection :experiences="experiences" />
-          <DeveloperRelationsSection :items="developerRelations" />
-        </div>
-      </div>
+    <ProfileHeader class="z-50" />
 
-      <ProjectsSection :projects="projects" />
-
-      <div class="relative z-10 max-w-2xl 3xl:max-w-4xl mx-auto border-0 pb-32 px-4 lg:px-0 mt-16 space-y-20">
-        <BlogPostsSection :blog-posts="blogPosts" />
-        <ConferenceTalksSection :talks="conferenceTalks" />
-        <CodeSnippetsSection :snippets="codeSnippets" />
+    <div class="relative max-w-2xl 3xl:max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
+      <div class="mt-10 mb-16 space-y-20 pointer-events-auto">
+        <ExperienceSection :experiences="experiences" />
+        <DeveloperRelationsSection :items="developerRelations" />
       </div>
     </div>
-  </ClientOnly>
+
+    <ProjectsSection :projects="projects" />
+
+    <div class="relative z-10 max-w-2xl 3xl:max-w-4xl mx-auto border-0 pb-32 px-4 lg:px-0 mt-16 space-y-20">
+      <BlogPostsSection :blog-posts="blogPosts" />
+      <ConferenceTalksSection :talks="conferenceTalks" />
+      <CodeSnippetsSection :snippets="codeSnippets" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -157,7 +168,7 @@ const developerRelations = [
   {
     title: "Cursor Ambassador",
     description: "Organising meetups and helping in Discord",
-    date: "November 2025 - Present",
+    date: "Nov 2025 - Present",
   },
 ];
 
@@ -193,4 +204,29 @@ const codeSnippets = [
     platform: 'CodeSandbox',
   },
 ]
+
+useSeoMeta({
+  title: 'Alexander Gekov — Software Engineer',
+  description:
+    'Software Engineer at n8n and Co-Founder of TalentSight. Projects, writing, conference talks and open source.',
+  ogTitle: 'Alexander Gekov — Software Engineer',
+  ogDescription:
+    'Software Engineer at n8n and Co-Founder of TalentSight. Projects, writing, conference talks and open source.',
+  ogType: 'website',
+  ogUrl: 'https://alexandergekov.com/',
+  ogImage: 'https://alexandergekov.com/card.png',
+  twitterCard: 'summary_large_image',
+  twitterCreator: '@alexandergekov',
+})
 </script>
+
+<style scoped>
+/*
+ * Keep the lanyard in the margin to the right of the content column. The
+ * column width lives in one place (--content-width in tailwind.css), so the
+ * canvas and the page rules stay in sync at every breakpoint.
+ */
+.band-margin {
+  left: calc(50% + (var(--content-width) / 2) + var(--content-gutter));
+}
+</style>
