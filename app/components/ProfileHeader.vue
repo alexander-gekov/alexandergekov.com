@@ -48,20 +48,16 @@
          whitespace or inner padding here renders as a gap before the comma. -->
     <p class="text-sm text-muted-foreground leading-relaxed mt-6 max-w-prose">
       Software Engineer at
-      <LinkPreview
-        url="https://n8n.io"
-        class="font-semibold text-foreground pb-0.5 border-b border-muted-foreground/40 hover:border-foreground transition-colors duration-300">
+      <LinkPreview url="https://n8n.io" class="group font-semibold text-foreground">
         <span class="inline-flex items-center gap-1.5 align-middle">
           <img src="/n8n-icon.svg" alt="" width="16" height="16" class="w-4 h-4" />
-          n8n
+          <span :class="linkTextClass">n8n</span>
         </span>
       </LinkPreview>, Co-Founder of
-      <LinkPreview
-        url="https://talsight.com"
-        class="font-semibold text-foreground pb-0.5 border-b border-muted-foreground/40 hover:border-foreground transition-colors duration-300">
+      <LinkPreview url="https://talsight.com" class="group font-semibold text-foreground">
         <span class="inline-flex items-center gap-1.5 align-middle">
           <img src="/logo-light.svg" alt="" width="16" height="16" class="w-4 h-4 dark:invert" />
-          TalentSight
+          <span :class="linkTextClass">TalentSight</span>
         </span>
       </LinkPreview>.
     </p>
@@ -84,6 +80,11 @@
 // variant never bubbles to the document, so Plausible's file-downloads
 // script could not see it.
 const RESUME_PATH = '/Alexander_Gekov_CV_Product_One_Page.pdf'
+
+// Underlines the word only. A border on the wrapper sat well below the text,
+// because the 16px logo makes the inline box taller than the 14px type.
+const linkTextClass =
+  'underline decoration-1 underline-offset-4 decoration-muted-foreground/40 group-hover:decoration-foreground transition-colors duration-300'
 
 const socials = [
   { label: 'GitHub', href: 'https://github.com/alexander-gekov' },
