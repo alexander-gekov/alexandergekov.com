@@ -1,8 +1,6 @@
 <template>
   <section>
-    <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-      Conference Talks
-    </div>
+    <SectionHeading>Conference Talks</SectionHeading>
     <div class="mt-6 space-y-5">
       <div
         v-for="talk in talks"
@@ -18,7 +16,7 @@
             {{ talk.title }}
           </NuxtLink>
         </div>
-        <div class="text-xs text-muted-foreground text-end">
+        <div class="font-mono text-xs tabular-nums text-muted-foreground text-end">
           {{ talk.event }}
         </div>
       </div>

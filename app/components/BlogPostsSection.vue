@@ -1,8 +1,6 @@
 <template>
   <section>
-    <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-      Blog posts
-    </div>
+    <SectionHeading>Blog Posts</SectionHeading>
     <div class="mt-6">
       <template v-if="blogPosts && blogPosts.length">
         <TransitionGroup
@@ -23,7 +21,7 @@
                 {{ post.title }}
               </NuxtLink>
             </div>
-            <div class="text-xs text-muted-foreground whitespace-nowrap">
+            <div class="font-mono text-xs tabular-nums text-muted-foreground whitespace-nowrap">
               {{ post.date }}
             </div>
           </div>
@@ -32,8 +30,9 @@
           name="fade">
           <button
             v-if="remainingCount > 0 && !showAll"
+            type="button"
             @click="showAll = true"
-            class="text-sm font-semibold tracking-tight text-muted-foreground hover:text-foreground transition-colors cursor-pointer pt-2 mt-5 block">
+            class="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer pt-2 mt-5 block">
             + {{ remainingCount }} more
           </button>
         </Transition>

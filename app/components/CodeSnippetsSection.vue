@@ -1,8 +1,6 @@
 <template>
   <section>
-    <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-      Code Snippets
-    </div>
+    <SectionHeading>Code Snippets</SectionHeading>
     <div class="mt-6 space-y-5">
       <div
         v-for="snippet in snippets"
@@ -18,7 +16,7 @@
             {{ snippet.title }}
           </NuxtLink>
         </div>
-        <div class="text-xs text-muted-foreground whitespace-nowrap">
+        <div class="font-mono text-xs text-muted-foreground whitespace-nowrap">
           {{ snippet.platform }}
         </div>
       </div>

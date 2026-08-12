@@ -1,9 +1,7 @@
 <template>
   <section>
-    <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-      Developer Relations
-    </div>
-    <div class="mt-4 space-y-6">
+    <SectionHeading>Developer Relations</SectionHeading>
+    <div class="mt-6 space-y-5">
       <div
         v-for="item in items"
         :key="item.title"
@@ -12,20 +10,20 @@
           <img
             v-if="item.image"
             :src="item.image"
-            :alt="item.title"
+            :alt="`${item.title} logo`"
             class="w-5 h-5 mt-0.5 shrink-0 grayscale opacity-80" />
           <div class="min-w-0">
             <div class="text-sm font-semibold leading-tight w-fit z-50 relative">
               {{ item.title }}
             </div>
-            <div
+            <p
               v-if="item.description"
               class="mt-1 text-xs text-muted-foreground w-fit z-50 relative">
               {{ item.description }}
-            </div>
+            </p>
           </div>
         </div>
-        <div class="text-xs text-muted-foreground whitespace-nowrap">
+        <div class="font-mono text-xs tabular-nums text-muted-foreground whitespace-nowrap">
           {{ item.date }}
         </div>
       </div>
