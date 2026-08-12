@@ -17,9 +17,12 @@
     <!-- Preview: fixed-position, so it lives on the body rather than nested in
          whatever inline context the trigger sits in. -->
     <Teleport to="body">
+      <!-- Teleported nodes are not guaranteed to land after #__nuxt in the
+           body, so this needs a z-index above the page layers rather than
+           relying on DOM order. Same value as the project preview. -->
       <div
         v-if="isVisible"
-        class="pointer-events-none fixed z-50"
+        class="pointer-events-none fixed z-[9999]"
         :style="previewStyle"
       >
         <div
