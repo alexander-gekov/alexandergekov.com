@@ -4,10 +4,17 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   app: {
     head: {
+      htmlAttrs: { lang: 'en' },
       link: [
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { href: 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap', rel: 'stylesheet' }
+        // Inter for UI/body, JetBrains Mono for section labels and metadata.
+        // Requested as one stylesheet so both families share a round trip.
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400..700&display=swap',
+        },
       ],
       script: [
         {
