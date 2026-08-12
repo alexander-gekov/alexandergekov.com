@@ -1,9 +1,12 @@
 <template>
-  <div :class="cn('relative inline-block', props.class)">
+  <div ref="root" :class="cn('relative inline-block', props.class)">
     <!-- Trigger -->
     <NuxtLink
       :to="url"
-      :class="cn('text-black dark:text-white', props.linkClass)"
+      external
+      target="_blank"
+      rel="noopener noreferrer"
+      :class="cn('text-foreground', props.linkClass)"
       @mousemove="handleMouseMove"
       @mouseenter="showPreview"
       @mouseleave="hidePreview"
@@ -14,25 +17,22 @@
     <!-- Preview -->
     <div
       v-if="isVisible"
-      ref="preview"
-      class="pointer-events-none absolute z-50"
+      class="pointer-events-none fixed z-50"
       :style="previewStyle"
     >
       <div
         class="overflow-hidden rounded-xl shadow-xl"
         :class="[popClass, { 'transform-gpu': !props.isStatic }]"
       >
-        <div
-          class="block rounded-xl border-2 border-transparent bg-white p-1 shadow-lg dark:bg-gray-900"
-        >
+        <div class="block rounded-xl border border-border bg-popover p-1 shadow-lg">
           <img
             :src="previewSrc"
             :width="width"
             :height="height"
             class="size-full rounded-lg object-cover"
             :style="imageStyle"
-            alt="preview"
-            @load="handleImageLoad"
+            alt=""
+            aria-hidden="true"
           />
         </div>
       </div>
@@ -76,9 +76,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const isVisible = ref(false);
-const isLoading = ref(true);
-const preview = ref<HTMLElement | null>(null);
+const root = ref<HTMLElement | null>(null);
 const hasPopped = ref(false);
+const colorMode = useColorMode();
 
 // Generate preview URL
 const previewSrc = computed(() => {
@@ -89,7 +89,8 @@ const previewSrc = computed(() => {
     screenshot: "true",
     meta: "false",
     embed: "screenshot.url",
-    colorScheme: "light",
+    // Match the site theme, otherwise a light screenshot glares in dark mode.
+    colorScheme: colorMode.value === "dark" ? "dark" : "light",
     "viewport.isMobile": "true",
     "viewport.deviceScaleFactor": "1",
     "viewport.width": String(props.width * 3),
@@ -105,28 +106,33 @@ const mousePosition = reactive({
   y: 0,
 });
 
-// Calculate preview position
+// Calculate preview position. Measured from the trigger itself (which is
+// always mounted) rather than the popup, so the first painted frame is
+// already in the right place instead of flashing at the top-left.
 const previewStyle = computed<CSSProperties>(() => {
-  if (!preview.value) return {};
-
-  const offset = 20;
   const previewWidth = props.width;
   const previewHeight = props.height;
-  const viewportWidth = window.innerWidth;
 
-  let x = mousePosition.x - previewWidth / 2;
-  x = Math.min(Math.max(0, x), viewportWidth - previewWidth);
-
-  const linkRect = preview.value.parentElement?.getBoundingClientRect();
-  const y = linkRect ? linkRect.top - previewHeight - offset : 0;
-
-  return {
-    position: "fixed",
-    left: `${x}px`,
-    top: `${y}px`,
+  const base: CSSProperties = {
     width: `${previewWidth}px`,
     height: `${previewHeight}px`,
   };
+
+  if (!import.meta.client || !root.value) return base;
+
+  const offset = 20;
+  const triggerRect = root.value.getBoundingClientRect();
+
+  const x = Math.min(
+    Math.max(8, mousePosition.x - previewWidth / 2),
+    window.innerWidth - previewWidth - 8,
+  );
+
+  // Prefer above the link; drop below when it would overflow the viewport.
+  const above = triggerRect.top - previewHeight - offset;
+  const y = above >= 8 ? above : triggerRect.bottom + offset;
+
+  return { ...base, left: `${x}px`, top: `${y}px` };
 });
 
 // Image specific styling
@@ -156,10 +162,6 @@ function showPreview() {
 function hidePreview() {
   isVisible.value = false;
   hasPopped.value = false;
-}
-
-function handleImageLoad() {
-  isLoading.value = false;
 }
 </script>
 

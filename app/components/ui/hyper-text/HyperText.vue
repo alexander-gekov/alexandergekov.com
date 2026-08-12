@@ -1,6 +1,7 @@
 <template>
   <div
-    :class="cn('flex scale-100 cursor-default overflow-hidden py-2', $props.class)"
+    :class="cn('flex scale-100 cursor-default overflow-hidden py-2 font-mono', $props.class)"
+    aria-hidden="true"
     @mouseenter="triggerAnimation"
   >
     <div class="flex">
@@ -8,8 +9,8 @@
         v-for="(letter, i) in displayText"
         :key="i"
         as="span"
-        :class="cn(letter === ' ' ? 'w-3' : '', $props.class)"
-        class="inline-block font-mono"
+        :class="letter === ' ' ? 'w-3' : ''"
+        class="inline-block"
         :initial="{ opacity: 0, y: -10 }"
         :animate="{ opacity: 1, y: 0 }"
         :delay="i * (duration / (text.length * 10))"
@@ -31,10 +32,11 @@ const props = withDefaults(
     class?: HTMLAttributes["class"];
     text: string;
     duration?: number;
-    animateOnLoad: boolean;
+    animateOnLoad?: boolean;
   }>(),
   {
     duration: 800,
+    animateOnLoad: false,
   },
 );
 
@@ -62,6 +64,8 @@ const { pause, resume } = useIntervalFn(
     }
   },
   computed(() => props.duration / (props.text.length * 10)),
+  // Otherwise the scramble runs on mount even when animateOnLoad is false.
+  { immediate: false },
 );
 
 function startAnimation() {
