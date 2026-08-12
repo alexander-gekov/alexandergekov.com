@@ -5,9 +5,11 @@
         <img
           src="/casual.jpeg"
           alt="Alexander Gekov"
-          class="w-14 h-14 rounded-full" />
+          width="56"
+          height="56"
+          class="w-14 h-14 rounded-full object-cover" />
         <div class="min-w-0">
-          <h1 class="">
+          <h1 aria-label="Alexander Gekov">
             <HyperText
               text="Alexander Gekov"
               class="text-2xl font-bold tracking-tight"
@@ -15,76 +17,79 @@
               :animate-on-load="true"
             />
           </h1>
-          <div class="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-            <NuxtLink to="https://github.com/alexander-gekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">GitHub</NuxtLink>
-            <span class="text-muted-foreground/50">/</span>
-            <NuxtLink to="https://x.com/alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">X</NuxtLink>
-            <span class="text-muted-foreground/50">/</span>
-            <NuxtLink to="https://youtube.com/@alexandergekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">YouTube</NuxtLink>
-            <span class="text-muted-foreground/50">/</span>
-            <NuxtLink to="https://linkedin.com/in/alexander-gekov" external target="_blank" class="text-foreground/70 hover:text-foreground transition-colors font-medium">LinkedIn</NuxtLink>
-          </div>
+          <nav aria-label="Social profiles" class="flex items-center gap-2 mt-1.5 font-mono text-xs">
+            <template v-for="(social, index) in socials" :key="social.label">
+              <span v-if="index > 0" aria-hidden="true" class="text-muted-foreground/40">/</span>
+              <NuxtLink
+                :to="social.href"
+                external
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-muted-foreground hover:text-foreground transition-colors">
+                {{ social.label }}
+              </NuxtLink>
+            </template>
+          </nav>
         </div>
       </div>
-      <Button v-if="isDesktop"
+      <Button
+        as="a"
+        :href="RESUME_PATH"
+        download
         variant="outline"
         size="sm"
-        @click="downloadResume"
+        class="font-mono text-xs hidden lg:inline-flex"
       >
-        View Resume
+        Download CV
       </Button>
     </div>
 
-    <p class="text-sm text-muted-foreground mt-6 xl:max-w-1/2">
+    <!-- Punctuation sits flush against the closing tags on purpose: any
+         whitespace or inner padding here renders as a gap before the comma. -->
+    <p class="text-sm text-muted-foreground leading-relaxed mt-6 max-w-prose">
       Software Engineer at
       <LinkPreview
         url="https://n8n.io"
-        class="inline-flex items-center font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
-        <div class="flex items-center px-2">
-          <img
-            src="/n8n-icon.svg"
-            alt="n8n Logo"
-            class="w-4 h-4 mr-1.5" />
+        class="font-semibold text-foreground pb-0.5 border-b border-muted-foreground/40 hover:border-foreground transition-colors duration-300">
+        <span class="inline-flex items-center gap-1.5 align-middle">
+          <img src="/n8n-icon.svg" alt="" width="16" height="16" class="w-4 h-4" />
           n8n
-        </div>
-      </LinkPreview>
-      , Co-Founder of
+        </span>
+      </LinkPreview>, Co-Founder of
       <LinkPreview
         url="https://talsight.com"
-        class="inline-flex items-center font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
-        <div class="flex items-center px-2">
-          <img
-            src="/logo-light.svg"
-            alt="TalentSight Logo"
-            class="w-5 h-5 mr-2 dark:invert" />
+        class="font-semibold text-foreground pb-0.5 border-b border-muted-foreground/40 hover:border-foreground transition-colors duration-300">
+        <span class="inline-flex items-center gap-1.5 align-middle">
+          <img src="/logo-light.svg" alt="" width="16" height="16" class="w-4 h-4 dark:invert" />
           TalentSight
-        </div>
+        </span>
       </LinkPreview>.
     </p>
 
-    <Button v-if="!isDesktop"
-        variant="default"
-        class="mt-6"
-        size="sm"
-        @click="downloadResume"
-      >
-        View Resume
-      </Button>
+    <Button
+      as="a"
+      :href="RESUME_PATH"
+      download
+      variant="outline"
+      size="sm"
+      class="font-mono text-xs mt-6 lg:hidden"
+    >
+      Download CV
+    </Button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useMediaQuery } from '@vueuse/core'
+// A real anchor rather than a synthetic click on a detached element: that
+// variant never bubbles to the document, so Plausible's file-downloads
+// script could not see it.
+const RESUME_PATH = '/Alexander_Gekov_CV_Product_One_Page.pdf'
 
-const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
-
-const downloadResume = () => {
-  const link = document.createElement('a')
-  link.href = '/Alexander_Gekov_CV_Product_One_Page.pdf'
-  link.download = 'Alexander_Gekov_CV_Product_One_Page.pdf'
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-}
+const socials = [
+  { label: 'GitHub', href: 'https://github.com/alexander-gekov' },
+  { label: 'X', href: 'https://x.com/alexandergekov' },
+  { label: 'YouTube', href: 'https://youtube.com/@alexandergekov' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/alexander-gekov' },
+]
 </script>
 
