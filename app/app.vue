@@ -34,6 +34,14 @@ const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
 
 const projects = [
   {
+    name: "washere",
+    description:
+      "A skill for couples. Surprise your loved one when they have a win in their agent.",
+    image: "/washere.png",
+    github: "https://github.com/alexander-gekov/washere",
+    demo: "https://washere.alexandergekov.com/",
+  },
+  {
     name: "PriceBarometer",
     description:
       "A platform to track prices of products from supermarkets.",
