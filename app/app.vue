@@ -34,6 +34,14 @@ const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
 
 const projects = [
   {
+    name: "Bookwrap Studio",
+    description:
+      "Turn a front cover into a print-ready full book wrap.",
+    image: "/bookwrap-studio.png",
+    github: "https://github.com/alexander-gekov/bookwrap-studio",
+    demo: "https://bookwrap-studio.vercel.app/",
+  },
+  {
     name: "washere",
     description:
       "A skill for couples. Surprise your loved one when they have a win in their agent.",
