@@ -40,69 +40,65 @@
       </Teleport>
     </template>
 
-    <!-- Project list -->
-    <div class="mt-6 space-y-5">
-      <div
-        v-for="project in projects"
+    <!-- Project cards -->
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      <article
+        v-for="(project, index) in projects"
         :key="project.name"
-        class="flex items-start justify-between gap-6">
+        class="group relative flex flex-col rounded-2xl border border-border bg-card p-6 shadow-xs transition-[border-color,box-shadow,translate] duration-300 ease-out hover:border-foreground/20 hover:shadow-xl hover:shadow-foreground/[0.06] motion-safe:hover:-translate-y-1 focus-within:border-foreground/20"
+        @mouseenter="onEnter(project)"
+        @mouseleave="onLeave">
 
-        <div class="min-w-0 flex-1">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-[11px] tabular-nums tracking-wider text-muted-foreground/70">
+            {{ String(index + 1).padStart(2, '0') }}
+          </span>
+          <span class="grid size-7 place-items-center rounded-full border border-border text-muted-foreground transition-colors duration-300 group-hover:border-foreground group-hover:bg-foreground group-hover:text-background">
+            <LucideArrowUpRight class="size-3.5 transition-transform duration-300 ease-out motion-safe:group-hover:rotate-45" />
+          </span>
+        </div>
+
+        <h3 class="mt-5 text-base font-semibold tracking-tight">
+          <!-- Stretched link: the ::after makes the whole card clickable -->
           <NuxtLink
             :to="primaryLink(project)"
             external
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-sm font-semibold tracking-tight hover:underline underline-offset-4"
-            @mouseenter="onEnter(project)"
-            @mouseleave="onLeave">
+            class="outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-ring">
             {{ project.name }}
-            <LucideExternalLink class="w-3 h-3 shrink-0 opacity-60" />
           </NuxtLink>
-          <div class="mt-0.5 text-xs text-muted-foreground">
-            {{ project.description }}
-          </div>
-        </div>
+        </h3>
+        <p class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+          {{ project.description }}
+        </p>
 
-        <!-- Right-side secondary links — every project has at least "Live" -->
-        <div class="flex items-center gap-2 shrink-0 text-xs text-muted-foreground">
+        <div class="relative z-10 mt-6 flex flex-wrap items-center gap-2 border-t border-dashed border-border pt-4">
           <NuxtLink
-            v-if="project.demo"
-            :to="project.demo"
+            v-for="(link, i) in projectLinks(project)"
+            :key="link.label"
+            :to="link.href"
             external
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            Live
-          </NuxtLink>
-          <span v-if="project.demo && project.github" class="opacity-30">·</span>
-          <NuxtLink
-            v-if="project.github"
-            :to="project.github"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            GitHub
-          </NuxtLink>
-          <span v-if="project.github && project.npm" class="opacity-30">·</span>
-          <NuxtLink
-            v-if="project.npm"
-            :to="project.npm"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            NPM
+            :aria-label="`${project.name} – ${link.label}`"
+            class="group/btn inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium outline-none transition-[color,background-color,border-color,scale] duration-200 active:scale-95 focus-visible:ring-2 focus-visible:ring-ring"
+            :class="i === 0
+              ? 'border-foreground bg-foreground text-background hover:bg-foreground/85'
+              : 'border-border bg-background text-muted-foreground hover:border-foreground/30 hover:text-foreground'">
+            <component
+              :is="link.icon"
+              class="size-3.5 transition-transform duration-200 ease-out motion-safe:group-hover/btn:scale-110 motion-safe:group-hover/btn:-rotate-6" />
+            {{ link.label }}
           </NuxtLink>
         </div>
-      </div>
+      </article>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { LucideExternalLink } from 'lucide-vue-next'
+import { LucideArrowUpRight, LucideGithub, LucideGlobe, LucidePackage } from 'lucide-vue-next'
 
 type Project = {
   name: string
@@ -199,6 +195,16 @@ function onContainerEnter(e: MouseEvent) {
 
 function primaryLink(project: Project): string {
   return project.demo ?? project.github ?? project.npm ?? '#'
+}
+
+const linkTypes = [
+  { key: 'demo', label: 'Live', icon: LucideGlobe },
+  { key: 'github', label: 'GitHub', icon: LucideGithub },
+  { key: 'npm', label: 'NPM', icon: LucidePackage },
+] as const
+
+function projectLinks(project: Project) {
+  return linkTypes.flatMap(({ key, ...rest }) => project[key] ? [{ ...rest, href: project[key] }] : [])
 }
 
 onMounted(() => {
