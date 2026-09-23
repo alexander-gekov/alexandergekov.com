@@ -2,16 +2,12 @@
   <ClientOnly>
     <div class="relative w-full overflow-hidden font-sans">
       <PageBorder />
-      <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
-        <Band />
-      </div>
       <NavBar class="relative z-50 max-w-2xl 3xl:max-w-4xl mx-auto pointer-events-auto" />
 
       <ProfileHeader class="z-50" />
 
       <div class="relative max-w-2xl 3xl:max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
-        <!-- z-[45]: above the lanyard canvas (z-40) so rows stay hoverable, below the header (z-50) so its link previews overlay -->
-        <div class="relative z-[45] mt-10 mb-16 space-y-20 pointer-events-auto">
+        <div class="mt-10 mb-16 space-y-20 pointer-events-auto">
           <ExperienceSection :experiences="experiences" />
           <DeveloperRelationsSection :items="developerRelations" />
           <ContributionsSection :contributions="contributions" />
@@ -30,10 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { useMediaQuery } from '@vueuse/core'
-
-const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
-
 const projects = [
   {
     name: "Bookwrap Studio",
@@ -44,12 +36,12 @@ const projects = [
     demo: "https://bookwrap-studio.vercel.app/",
   },
   {
-    name: "washere",
+    name: "Infinite Alchemy",
     description:
-      "A skill for couples. Surprise your loved one when they have a win in their agent.",
-    image: "/washere.png",
-    github: "https://github.com/alexander-gekov/washere",
-    demo: "https://washere.alexandergekov.com/",
+      "AI-powered Little Alchemy Clone.",
+    image: "/infinitealchemy.png",
+    github: "https://github.com/alexander-gekov/infinite-alchemy",
+    demo: "https://infinitealchemy.alexandergekov.com/",
   },
   {
     name: "PriceBarometer",
@@ -64,68 +56,6 @@ const projects = [
       "An open-source puzzle game.",
     image: "/pawns.png",
     demo: "https://pawns.vercel.app/",
-  },
-  {
-    name: "Horo",
-    description:
-      "An open-source puzzle game.",
-    image: "/taengo.png",
-    demo: "https://horo-game.vercel.app/",
-  },
-  {
-    name: "Stitch",
-    description:
-      "An open-source connect the dots puzzle game.",
-    image: "/ziip.png",
-    demo: "https://stitch-connect.vercel.app/",
-  },
-  {
-    name: "Infinite Alchemy",
-    description:
-      "AI-powered Little Alchemy Clone.",
-    image: "/infinitealchemy.png",
-    github: "https://github.com/alexander-gekov/infinite-alchemy",
-    demo: "https://infinitealchemy.alexandergekov.com/",
-  },
-  {
-    name: "upstash-search-ui-vue",
-    description:
-      "Port of @upstash/search-ui for Vue.",
-    image: "/upstash.png",
-    github: "https://github.com/alexander-gekov/upstash-search-ui-vue",
-    npm: "https://www.npmjs.com/package/upstash-search-ui-vue",
-    demo: "https://upstash-search-ui-vue-demo.vercel.app/",
-  },
-  {
-    name: "a12v-stack",
-    description:
-      "Modern Nuxt 3 App Boilerplate",
-    image: "/a12v.png",
-    github: "https://github.com/alexander-gekov/a12v-stack",
-    npm: "https://www.npmjs.com/package/create-a12v-app",
-    demo: "https://a12v-stack.vercel.app/",
-  },
-  {
-    name: "GitHubGarden",
-    description:
-      "Interactive visualization of your GitHub contributions",
-    image: "/githubgarden.png",
-    github: "https://github.com/alexander-gekov/github-garden",
-    demo: "https://github-garden.vercel.app/",
-  },
-  {
-    name: "mrtnz.cc",
-    description:
-      "Platform for creating and sharing digital bracelets with friends",
-    image: "/mrtnz.png",
-    github: "https://github.com/alexander-gekov/mrtnz.cc",
-  },
-  {
-    name: "Wedding Website",
-    description:
-      "My own wedding website built with React, Next.js and Framer Motion",
-    image: "/wedding-website.png",
-    demo: "https://www.alexandellie.love/en/",
   },
 ];
 
