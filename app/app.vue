@@ -14,6 +14,7 @@
         <div class="relative z-[45] mt-10 mb-16 space-y-20 pointer-events-auto">
           <ExperienceSection :experiences="experiences" />
           <DeveloperRelationsSection :items="developerRelations" />
+          <ContributionsSection :contributions="contributions" />
         </div>
       </div>
 
@@ -196,7 +197,10 @@ const conferenceTalks = [
   },
 ];
 
-const { data: blogPosts } = await useFetch<Array<{ title: string; href: string; date: string }>>('/api/blog-posts')
+const [{ data: blogPosts }, { data: contributions }] = await Promise.all([
+  useFetch<Array<{ title: string; href: string; date: string }>>('/api/blog-posts'),
+  useFetch('/api/github-contributions'),
+])
 
 const codeSnippets = [
   {
