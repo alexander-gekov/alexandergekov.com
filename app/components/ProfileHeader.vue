@@ -42,9 +42,11 @@
       <Button v-if="isDesktop"
         variant="outline"
         size="sm"
+        aria-keyshortcuts="v"
         @click="downloadResume"
       >
         View Resume
+        <kbd class="rounded border border-border bg-muted px-1.5 font-mono text-[10px] leading-4 text-muted-foreground">V</kbd>
       </Button>
     </div>
 
@@ -87,9 +89,18 @@
 </template>
 
 <script setup lang="ts">
-import { useMediaQuery } from '@vueuse/core'
+import { onKeyStroke, useMediaQuery } from '@vueuse/core'
 
 const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
+
+onKeyStroke(['v', 'V'], (e) => {
+  const target = e.target as HTMLElement
+  const isTyping = target.isContentEditable
+    || ['TEXTAREA', 'SELECT'].includes(target.tagName)
+    || (target instanceof HTMLInputElement && !['radio', 'checkbox', 'button', 'submit'].includes(target.type))
+  if (e.metaKey || e.ctrlKey || e.altKey || e.repeat || isTyping) return
+  downloadResume()
+})
 
 const downloadResume = () => {
   const link = document.createElement('a')
