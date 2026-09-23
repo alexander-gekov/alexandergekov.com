@@ -57,6 +57,68 @@ const projects = [
     image: "/pawns.png",
     demo: "https://pawns.vercel.app/",
   },
+  {
+    name: "washere",
+    description:
+      "A skill for couples. Surprise your loved one when they have a win in their agent.",
+    image: "/washere.png",
+    github: "https://github.com/alexander-gekov/washere",
+    demo: "https://washere.alexandergekov.com/",
+  },
+  {
+    name: "Horo",
+    description:
+      "An open-source puzzle game.",
+    image: "/taengo.png",
+    demo: "https://horo-game.vercel.app/",
+  },
+  {
+    name: "Stitch",
+    description:
+      "An open-source connect the dots puzzle game.",
+    image: "/ziip.png",
+    demo: "https://stitch-connect.vercel.app/",
+  },
+  {
+    name: "upstash-search-ui-vue",
+    description:
+      "Port of @upstash/search-ui for Vue.",
+    image: "/upstash.png",
+    github: "https://github.com/alexander-gekov/upstash-search-ui-vue",
+    npm: "https://www.npmjs.com/package/upstash-search-ui-vue",
+    demo: "https://upstash-search-ui-vue-demo.vercel.app/",
+  },
+  {
+    name: "a12v-stack",
+    description:
+      "Modern Nuxt 3 App Boilerplate",
+    image: "/a12v.png",
+    github: "https://github.com/alexander-gekov/a12v-stack",
+    npm: "https://www.npmjs.com/package/create-a12v-app",
+    demo: "https://a12v-stack.vercel.app/",
+  },
+  {
+    name: "GitHubGarden",
+    description:
+      "Interactive visualization of your GitHub contributions",
+    image: "/githubgarden.png",
+    github: "https://github.com/alexander-gekov/github-garden",
+    demo: "https://github-garden.vercel.app/",
+  },
+  {
+    name: "mrtnz.cc",
+    description:
+      "Platform for creating and sharing digital bracelets with friends",
+    image: "/mrtnz.png",
+    github: "https://github.com/alexander-gekov/mrtnz.cc",
+  },
+  {
+    name: "Wedding Website",
+    description:
+      "My own wedding website built with React, Next.js and Framer Motion",
+    image: "/wedding-website.png",
+    demo: "https://www.alexandellie.love/en/",
+  },
 ];
 
 const experiences = [

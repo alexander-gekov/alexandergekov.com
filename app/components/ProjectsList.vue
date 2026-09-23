@@ -1,8 +1,9 @@
 <template>
-  <div class="mt-6 grid gap-4 sm:grid-cols-2">
+  <TransitionGroup name="card" tag="div" class="mt-6 grid gap-4 sm:grid-cols-2">
     <Tray
-      v-for="project in projects"
+      v-for="(project, index) in projects"
       :key="project.name"
+      :style="{ '--i': index % 4 }"
       interactive>
       <article class="flex h-full flex-col">
 
@@ -53,7 +54,7 @@
         </div>
       </article>
     </Tray>
-  </div>
+  </TransitionGroup>
 </template>
 
 <script setup lang="ts">
@@ -86,3 +87,21 @@ function projectLinks(project: Project) {
   return linkTypes.flatMap(({ key, ...rest }) => project[key] ? [{ ...rest, href: project[key] }] : [])
 }
 </script>
+
+<style scoped>
+.card-enter-active {
+  transition: opacity 0.35s ease-out, translate 0.35s ease-out;
+  transition-delay: calc(var(--i) * 60ms);
+}
+
+.card-enter-from {
+  opacity: 0;
+  translate: 0 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-enter-active {
+    transition: none;
+  }
+}
+</style>
