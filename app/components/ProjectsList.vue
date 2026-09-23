@@ -1,108 +1,64 @@
 <template>
-  <div
-    @mouseenter="onContainerEnter"
-    @mousemove="onMouseMove">
+  <TransitionGroup name="card" tag="div" class="mt-6 grid gap-4 sm:grid-cols-2">
+    <Tray
+      v-for="(project, index) in projects"
+      :key="project.name"
+      :style="{ '--i': index % 4 }"
+      interactive>
+      <article class="flex h-full flex-col">
 
-    <!--
-      Floating preview — disabled on Safari due to fixed+transform compositing issues.
-      Two overlapping image layers crossfade between projects without closing the popup.
-      The outer wrapper is moved via direct DOM transform (bypasses Vue reactivity for
-      max-frequency updates); the inner wrapper drives opacity/scale via CSS transition.
-    -->
-    <template v-if="!isSafari">
-      <Teleport to="body">
-        <div
-          ref="posEl"
-          class="pointer-events-none fixed z-[9999] will-change-transform"
-          style="top: 0; left: 0; width: 340px;">
-          <div
-            class="overflow-hidden rounded-xl shadow-2xl border border-border/50 bg-background"
-            :style="{
-              opacity: isVisible ? 1 : 0,
-              transform: `scale(${isVisible ? 1 : 0.92})`,
-              transition: 'opacity 0.22s ease, transform 0.22s ease',
-            }">
-            <!-- 16/10 aspect ratio container, padding-bottom = 10/16 * 100 -->
-            <div class="relative w-full" style="padding-bottom: 62.5%;">
-              <img
-                :src="imageA"
-                alt=""
-                class="absolute inset-0 w-full h-full object-cover"
-                :style="{ opacity: showingA ? 1 : 0, transition: 'opacity 0.3s ease' }" />
-              <img
-                :src="imageB"
-                alt=""
-                class="absolute inset-0 w-full h-full object-cover"
-                :style="{ opacity: showingA ? 0 : 1, transition: 'opacity 0.3s ease' }" />
-            </div>
-          </div>
+        <div class="aspect-[16/10] overflow-hidden border-b border-border">
+          <img
+            :src="project.image"
+            alt=""
+            loading="lazy"
+            class="size-full object-cover object-top grayscale transition-[filter,scale] duration-500 ease-out group-hover:grayscale-0 motion-safe:group-hover:scale-[1.03]" />
         </div>
-      </Teleport>
-    </template>
 
-    <!-- Project list -->
-    <div class="mt-6 space-y-5">
-      <div
-        v-for="project in projects"
-        :key="project.name"
-        class="flex items-start justify-between gap-6">
-
-        <div class="min-w-0 flex-1">
-          <NuxtLink
-            :to="primaryLink(project)"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-sm font-semibold tracking-tight hover:underline underline-offset-4"
-            @mouseenter="onEnter(project)"
-            @mouseleave="onLeave">
-            {{ project.name }}
-            <LucideExternalLink class="w-3 h-3 shrink-0 opacity-60" />
-          </NuxtLink>
-          <div class="mt-0.5 text-xs text-muted-foreground">
+        <div class="flex flex-1 flex-col px-4 pt-3.5 pb-4">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="min-w-0 text-[15px] font-medium tracking-tight">
+              <!-- Stretched link: the ::after makes the whole card clickable -->
+              <NuxtLink
+                :to="primaryLink(project)"
+                external
+                target="_blank"
+                rel="noopener noreferrer"
+                class="outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-ring">
+                {{ project.name }}
+              </NuxtLink>
+            </h3>
+            <LucideArrowUpRight
+              class="size-4 shrink-0 text-muted-foreground opacity-0 scale-75 -translate-x-0.5 transition-[opacity,scale,translate] duration-300 ease-out group-hover:opacity-100 group-hover:scale-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:scale-100 group-focus-within:translate-x-0" />
+          </div>
+          <p class="mt-0.5 flex-1 text-sm leading-relaxed text-muted-foreground">
             {{ project.description }}
+          </p>
+
+          <div class="relative z-10 mt-4 flex flex-wrap gap-1.5">
+            <NuxtLink
+              v-for="link in projectLinks(project)"
+              :key="link.label"
+              :to="link.href"
+              external
+              target="_blank"
+              rel="noopener noreferrer"
+              :aria-label="`${project.name} – ${link.label}`"
+              class="group/btn inline-flex items-center gap-1.5 rounded-full bg-[var(--tint)] px-2.5 py-1 text-xs font-medium text-muted-foreground outline-none transition-[color,background-color,scale] duration-200 hover:bg-foreground hover:text-background active:scale-95 focus-visible:ring-2 focus-visible:ring-ring">
+              <component
+                :is="link.icon"
+                class="size-3.5 transition-transform duration-200 ease-out motion-safe:group-hover/btn:-rotate-8 motion-safe:group-hover/btn:scale-110" />
+              {{ link.label }}
+            </NuxtLink>
           </div>
         </div>
-
-        <!-- Right-side secondary links — every project has at least "Live" -->
-        <div class="flex items-center gap-2 shrink-0 text-xs text-muted-foreground">
-          <NuxtLink
-            v-if="project.demo"
-            :to="project.demo"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            Live
-          </NuxtLink>
-          <span v-if="project.demo && project.github" class="opacity-30">·</span>
-          <NuxtLink
-            v-if="project.github"
-            :to="project.github"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            GitHub
-          </NuxtLink>
-          <span v-if="project.github && project.npm" class="opacity-30">·</span>
-          <NuxtLink
-            v-if="project.npm"
-            :to="project.npm"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-foreground transition-colors">
-            NPM
-          </NuxtLink>
-        </div>
-      </div>
-    </div>
-  </div>
+      </article>
+    </Tray>
+  </TransitionGroup>
 </template>
 
 <script setup lang="ts">
-import { LucideExternalLink } from 'lucide-vue-next'
+import { LucideArrowUpRight, LucideGithub, LucideGlobe, LucidePackage } from 'lucide-vue-next'
 
 type Project = {
   name: string
@@ -113,104 +69,39 @@ type Project = {
   demo?: string
 }
 
-const props = defineProps<{
+defineProps<{
   projects: Project[]
 }>()
-
-// Detect Safari at setup time (client-only; this component is inside <ClientOnly>).
-// Safari has known compositing issues with high-frequency fixed+transform updates.
-const isSafari = import.meta.client
-  ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
-  : false
-
-// Template ref for the outer positioning wrapper (manipulated directly in RAF).
-const posEl = ref<HTMLElement | null>(null)
-
-// Plain JS variables — not Vue refs — to keep RAF-frequency updates off the
-// reactivity system and avoid unnecessary component re-renders every frame.
-let targetX = 0
-let targetY = 0
-let currentX = 0
-let currentY = 0
-let rafId: number | null = null
-
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t
-
-function tick() {
-  currentX = lerp(currentX, targetX, 0.12)
-  currentY = lerp(currentY, targetY, 0.12)
-  if (posEl.value) {
-    // Use transform (not left/top) so the browser can composite on the GPU
-    // without triggering layout reflow on every frame.
-    posEl.value.style.transform =
-      `translate(calc(${currentX}px - 50%), calc(${currentY}px - 100% - 20px))`
-  }
-  rafId = requestAnimationFrame(tick)
-}
-
-// Vue refs that drive CSS transitions (low-frequency, safe to be reactive).
-const isVisible = ref(false)
-const imageA = ref('')
-const imageB = ref('')
-const showingA = ref(true)
-
-function switchToImage(src: string) {
-  if (!isVisible.value) {
-    // First reveal: load both layers identically so no crossfade flicker.
-    imageA.value = src
-    imageB.value = src
-    showingA.value = true
-  } else if (showingA.value) {
-    imageB.value = src
-    showingA.value = false
-  } else {
-    imageA.value = src
-    showingA.value = true
-  }
-}
-
-function onEnter(project: Project) {
-  switchToImage(project.image)
-  isVisible.value = true
-}
-
-function onLeave() {
-  isVisible.value = false
-  setTimeout(() => {
-    if (!isVisible.value) {
-      imageA.value = ''
-      imageB.value = ''
-    }
-  }, 300)
-}
-
-function onMouseMove(e: MouseEvent) {
-  targetX = e.clientX
-  targetY = e.clientY
-}
-
-// Snap to the exact entry position so the card doesn't fly in from (0, 0).
-function onContainerEnter(e: MouseEvent) {
-  currentX = e.clientX
-  currentY = e.clientY
-  targetX = e.clientX
-  targetY = e.clientY
-}
 
 function primaryLink(project: Project): string {
   return project.demo ?? project.github ?? project.npm ?? '#'
 }
 
-onMounted(() => {
-  // Preload all project images so crossfades are instant (no network latency).
-  props.projects.forEach(p => {
-    const img = new Image()
-    img.src = p.image
-  })
-  if (!isSafari) tick()
-})
+const linkTypes = [
+  { key: 'demo', label: 'Live', icon: LucideGlobe },
+  { key: 'github', label: 'GitHub', icon: LucideGithub },
+  { key: 'npm', label: 'NPM', icon: LucidePackage },
+] as const
 
-onUnmounted(() => {
-  if (rafId !== null) cancelAnimationFrame(rafId)
-})
+function projectLinks(project: Project) {
+  return linkTypes.flatMap(({ key, ...rest }) => project[key] ? [{ ...rest, href: project[key] }] : [])
+}
 </script>
+
+<style scoped>
+.card-enter-active {
+  transition: opacity 0.35s ease-out, translate 0.35s ease-out;
+  transition-delay: calc(var(--i) * 60ms);
+}
+
+.card-enter-from {
+  opacity: 0;
+  translate: 0 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-enter-active {
+    transition: none;
+  }
+}
+</style>

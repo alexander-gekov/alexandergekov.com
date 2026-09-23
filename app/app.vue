@@ -1,24 +1,22 @@
 <template>
   <ClientOnly>
-    <div class="relative w-full overflow-hidden bg-background font-sans">
+    <div class="relative w-full overflow-hidden font-sans">
       <PageBorder />
-      <div v-if="isDesktop" class="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
-        <Band />
-      </div>
-      <NavBar class="relative z-50 max-w-2xl 3xl:max-w-4xl mx-auto pointer-events-auto" />
+      <NavBar class="relative z-50 max-w-2xl mx-auto pointer-events-auto" />
 
       <ProfileHeader class="z-50" />
 
-      <div class="relative max-w-2xl 3xl:max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
+      <div class="relative max-w-2xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
         <div class="mt-10 mb-16 space-y-20 pointer-events-auto">
           <ExperienceSection :experiences="experiences" />
           <DeveloperRelationsSection :items="developerRelations" />
+          <ContributionsSection :contributions="contributions" />
         </div>
       </div>
 
       <ProjectsSection :projects="projects" />
 
-      <div class="relative z-10 max-w-2xl 3xl:max-w-4xl mx-auto border-0 pb-32 px-4 lg:px-0 mt-16 space-y-20">
+      <div class="relative z-10 max-w-2xl mx-auto border-0 pb-32 px-4 lg:px-0 mt-16 space-y-20">
         <BlogPostsSection :blog-posts="blogPosts" />
         <ConferenceTalksSection :talks="conferenceTalks" />
         <CodeSnippetsSection :snippets="codeSnippets" />
@@ -28,10 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { useMediaQuery } from '@vueuse/core'
-
-const isDesktop = useMediaQuery('(min-width: 1024px)', { ssrWidth: 1024 })
-
 const projects = [
   {
     name: "Bookwrap Studio",
@@ -42,12 +36,12 @@ const projects = [
     demo: "https://bookwrap-studio.vercel.app/",
   },
   {
-    name: "washere",
+    name: "Infinite Alchemy",
     description:
-      "A skill for couples. Surprise your loved one when they have a win in their agent.",
-    image: "/washere.png",
-    github: "https://github.com/alexander-gekov/washere",
-    demo: "https://washere.alexandergekov.com/",
+      "AI-powered Little Alchemy Clone.",
+    image: "/infinitealchemy.png",
+    github: "https://github.com/alexander-gekov/infinite-alchemy",
+    demo: "https://infinitealchemy.alexandergekov.com/",
   },
   {
     name: "PriceBarometer",
@@ -64,6 +58,14 @@ const projects = [
     demo: "https://pawns.vercel.app/",
   },
   {
+    name: "washere",
+    description:
+      "A skill for couples. Surprise your loved one when they have a win in their agent.",
+    image: "/washere.png",
+    github: "https://github.com/alexander-gekov/washere",
+    demo: "https://washere.alexandergekov.com/",
+  },
+  {
     name: "Horo",
     description:
       "An open-source puzzle game.",
@@ -76,14 +78,6 @@ const projects = [
       "An open-source connect the dots puzzle game.",
     image: "/ziip.png",
     demo: "https://stitch-connect.vercel.app/",
-  },
-  {
-    name: "Infinite Alchemy",
-    description:
-      "AI-powered Little Alchemy Clone.",
-    image: "/infinitealchemy.png",
-    github: "https://github.com/alexander-gekov/infinite-alchemy",
-    demo: "https://infinitealchemy.alexandergekov.com/",
   },
   {
     name: "upstash-search-ui-vue",
@@ -117,7 +111,6 @@ const projects = [
       "Platform for creating and sharing digital bracelets with friends",
     image: "/mrtnz.png",
     github: "https://github.com/alexander-gekov/mrtnz.cc",
-    demo: "https://mrtnz.cc",
   },
   {
     name: "Wedding Website",
@@ -195,7 +188,10 @@ const conferenceTalks = [
   },
 ];
 
-const { data: blogPosts } = await useFetch<Array<{ title: string; href: string; date: string }>>('/api/blog-posts')
+const [{ data: blogPosts }, { data: contributions }] = await Promise.all([
+  useFetch<Array<{ title: string; href: string; date: string }>>('/api/blog-posts'),
+  useFetch('/api/github-contributions'),
+])
 
 const codeSnippets = [
   {

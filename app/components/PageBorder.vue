@@ -19,13 +19,4 @@
 .border-line-right {
   left: calc(50% + 24rem);
 }
-
-@media (min-width: 1920px) {
-  .border-line-left {
-    left: calc(50% - 31rem);
-  }
-  .border-line-right {
-    left: calc(50% + 31rem);
-  }
-}
 </style>

@@ -3,33 +3,35 @@
     <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
       Developer Relations
     </div>
-    <div class="mt-4 space-y-6">
-      <div
-        v-for="item in items"
-        :key="item.title"
-        class="flex items-start justify-between gap-6">
-        <div class="flex items-start gap-3 min-w-0 flex-1">
-          <img
-            v-if="item.image"
-            :src="item.image"
-            :alt="item.title"
-            class="w-5 h-5 mt-0.5 shrink-0 grayscale opacity-80" />
-          <div class="min-w-0">
-            <div class="text-sm font-semibold leading-tight w-fit z-50 relative">
-              {{ item.title }}
-            </div>
-            <div
-              v-if="item.description"
-              class="mt-1 text-xs text-muted-foreground w-fit z-50 relative">
-              {{ item.description }}
+    <Tray class="mt-6">
+      <div class="divide-y divide-border">
+        <div
+          v-for="item in items"
+          :key="item.title"
+          class="flex flex-col gap-1 px-4 py-3.5 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+          <div class="flex min-w-0 flex-1 items-start gap-3">
+            <img
+              v-if="item.image"
+              :src="item.image"
+              :alt="item.title"
+              class="mt-0.5 size-5 shrink-0 grayscale opacity-80" />
+            <div class="min-w-0">
+              <div class="text-sm font-medium leading-tight tracking-tight">
+                {{ item.title }}
+              </div>
+              <div
+                v-if="item.description"
+                class="mt-1 text-xs text-muted-foreground">
+                {{ item.description }}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="text-xs text-muted-foreground whitespace-nowrap">
-          {{ item.date }}
+          <div class="shrink-0 whitespace-nowrap text-xs text-muted-foreground">
+            {{ item.date }}
+          </div>
         </div>
       </div>
-    </div>
+    </Tray>
   </section>
 </template>
 
