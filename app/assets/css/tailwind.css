@@ -64,7 +64,7 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: oklch(0.992 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -102,7 +102,7 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
+  --card: oklch(0.195 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -154,9 +154,17 @@
 }
 
 :root {
-  --grain-opacity: 0.16;
+  --grain-opacity: 0.07;
+  --tint: rgb(0 0 0 / 0.035);
+  --border-strong: rgb(0 0 0 / 0.15);
+  --tray-shadow: 0 0 0 1px rgb(0 0 0 / 0.055), 0 1px 2px -1px rgb(0 0 0 / 0.05), 0 6px 16px -8px rgb(0 0 0 / 0.1);
+  --tray-shadow-hover: 0 0 0 1px rgb(0 0 0 / 0.09), 0 1px 3px -2px rgb(0 0 0 / 0.07), 0 8px 18px -8px rgb(0 0 0 / 0.12);
 }
 
 .dark {
   --grain-opacity: 0.1;
+  --tint: rgb(255 255 255 / 0.05);
+  --border-strong: rgb(255 255 255 / 0.12);
+  --tray-shadow: 0 0 0 1px rgb(255 255 255 / 0.075), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --tray-shadow-hover: 0 0 0 1px rgb(255 255 255 / 0.12), 0 1px 2px -1px rgb(0 0 0 / 0.05);
 }
