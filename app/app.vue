@@ -119,7 +119,6 @@ const projects = [
       "Platform for creating and sharing digital bracelets with friends",
     image: "/mrtnz.png",
     github: "https://github.com/alexander-gekov/mrtnz.cc",
-    demo: "https://mrtnz.cc",
   },
   {
     name: "Wedding Website",
