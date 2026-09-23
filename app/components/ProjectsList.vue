@@ -1,12 +1,12 @@
 <template>
   <div class="mt-6 grid gap-4 sm:grid-cols-2">
-    <article
+    <Tray
       v-for="project in projects"
       :key="project.name"
-      class="group relative rounded-2xl p-1 shadow-[var(--tray-shadow)] transition-shadow duration-200 ease-out hover:shadow-[var(--tray-shadow-hover)] focus-within:shadow-[var(--tray-shadow-hover)]">
-      <div class="flex h-full flex-col rounded-xl border border-border bg-card transition-colors duration-200 ease-out group-hover:border-[var(--border-strong)]">
+      interactive>
+      <article class="flex h-full flex-col">
 
-        <div class="aspect-[16/10] overflow-hidden rounded-t-[11px] border-b border-border">
+        <div class="aspect-[16/10] overflow-hidden border-b border-border">
           <img
             :src="project.image"
             alt=""
@@ -51,8 +51,8 @@
             </NuxtLink>
           </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </Tray>
   </div>
 </template>
 

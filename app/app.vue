@@ -10,7 +10,8 @@
       <ProfileHeader class="z-50" />
 
       <div class="relative max-w-2xl 3xl:max-w-4xl mx-auto border-0 px-4 lg:px-0 pointer-events-none">
-        <div class="mt-10 mb-16 space-y-20 pointer-events-auto">
+        <!-- z-[45]: above the lanyard canvas (z-40) so rows stay hoverable, below the header (z-50) so its link previews overlay -->
+        <div class="relative z-[45] mt-10 mb-16 space-y-20 pointer-events-auto">
           <ExperienceSection :experiences="experiences" />
           <DeveloperRelationsSection :items="developerRelations" />
         </div>

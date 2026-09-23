@@ -3,49 +3,40 @@
     <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
       Blog posts
     </div>
-    <div class="mt-6">
+    <Tray class="mt-6">
       <template v-if="blogPosts && blogPosts.length">
         <TransitionGroup
           name="post"
           tag="div"
-          class="space-y-5">
-          <div
+          class="divide-y divide-border">
+          <TrayLinkRow
             v-for="post in displayedPosts"
             :key="post.title"
-            class="flex items-start xl:items-center justify-between gap-6">
-            <div class="flex items-center gap-3 min-w-0">
-              <NuxtLink
-                :to="post.href"
-                external
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-sm font-semibold tracking-tight hover:underline underline-offset-4">
-                {{ post.title }}
-              </NuxtLink>
-            </div>
-            <div class="text-xs text-muted-foreground whitespace-nowrap">
-              {{ post.date }}
-            </div>
-          </div>
+            :title="post.title"
+            :href="post.href"
+            :meta="post.date" />
         </TransitionGroup>
-        <Transition
-          name="fade">
+        <Transition name="fade">
           <button
             v-if="remainingCount > 0 && !showAll"
-            @click="showAll = true"
-            class="text-sm font-semibold tracking-tight text-muted-foreground hover:text-foreground transition-colors cursor-pointer pt-2 mt-5 block">
-            + {{ remainingCount }} more
+            type="button"
+            class="group/more flex w-full cursor-pointer items-center justify-center gap-1.5 border-t border-dashed border-border px-4 py-3 text-sm font-medium text-muted-foreground outline-none transition-colors duration-200 hover:bg-[var(--tint)] hover:text-foreground focus-visible:bg-[var(--tint)]"
+            @click="showAll = true">
+            {{ remainingCount }} more posts
+            <LucideChevronDown class="size-4 transition-transform duration-200 ease-out motion-safe:group-hover/more:translate-y-0.5" />
           </button>
         </Transition>
       </template>
-      <div v-else class="text-sm text-muted-foreground">
+      <div v-else class="px-4 py-3.5 text-sm text-muted-foreground">
         Writing soon.
       </div>
-    </div>
+    </Tray>
   </section>
 </template>
 
 <script setup lang="ts">
+import { LucideChevronDown } from 'lucide-vue-next'
+
 interface BlogPost {
   title: string
   href: string

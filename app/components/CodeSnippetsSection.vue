@@ -3,26 +3,16 @@
     <div class="text-xs tracking-[0.25em] text-muted-foreground uppercase">
       Code Snippets
     </div>
-    <div class="mt-6 space-y-5">
-      <div
-        v-for="snippet in snippets"
-        :key="snippet.title"
-        class="flex items-start xl:items-center justify-between gap-6">
-        <div class="flex items-center gap-3 min-w-0">
-          <NuxtLink
-            :to="snippet.href"
-            external
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm font-semibold tracking-tight hover:underline underline-offset-4">
-            {{ snippet.title }}
-          </NuxtLink>
-        </div>
-        <div class="text-xs text-muted-foreground whitespace-nowrap">
-          {{ snippet.platform }}
-        </div>
+    <Tray class="mt-6">
+      <div class="divide-y divide-border">
+        <TrayLinkRow
+          v-for="snippet in snippets"
+          :key="snippet.title"
+          :title="snippet.title"
+          :href="snippet.href"
+          :meta="snippet.platform" />
       </div>
-    </div>
+    </Tray>
   </section>
 </template>
 
