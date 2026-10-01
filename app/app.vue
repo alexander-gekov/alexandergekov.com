@@ -28,6 +28,14 @@
 <script setup lang="ts">
 const projects = [
   {
+    name: "Better Pinterest",
+    description:
+      "A Chrome extension that turns any Pinterest grid into a fullscreen slide view.",
+    image: "/better-pinterest.png",
+    github: "https://github.com/alexander-gekov/better-pinterest",
+    demo: "https://better-pinterest.alexandergekov.com/",
+  },
+  {
     name: "Bookwrap Studio",
     description:
       "Turn a front cover into a print-ready full book wrap.",
@@ -104,13 +112,6 @@ const projects = [
     image: "/githubgarden.png",
     github: "https://github.com/alexander-gekov/github-garden",
     demo: "https://github-garden.vercel.app/",
-  },
-  {
-    name: "mrtnz.cc",
-    description:
-      "Platform for creating and sharing digital bracelets with friends",
-    image: "/mrtnz.png",
-    github: "https://github.com/alexander-gekov/mrtnz.cc",
   },
   {
     name: "Wedding Website",
