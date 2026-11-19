@@ -19,7 +19,7 @@
                 <img
                   :src="experience.image"
                   :alt="experience.company"
-                  class="h-4 w-auto max-w-5 object-contain grayscale opacity-80 transition-[filter,opacity] duration-300 group-hover/row:opacity-100 group-hover/row:grayscale-0"
+                  class="h-auto max-h-4 w-auto max-w-7 object-contain grayscale opacity-80 transition-[filter,opacity] duration-300 group-hover/row:opacity-100 group-hover/row:grayscale-0"
                   :class="hoveredIndex === index ? 'opacity-100 grayscale-0' : ''" />
               </span>
               <span class="block min-w-0">

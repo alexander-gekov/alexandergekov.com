@@ -59,7 +59,7 @@
           <img
             src="/n8n-icon.svg"
             alt="n8n Logo"
-            class="w-4 h-4 mr-1.5" />
+            class="h-3.5 w-auto mr-1.5" />
           n8n
         </div>
       </LinkPreview>
