@@ -125,7 +125,7 @@ const projects = [
 const experiences = [
   {
     company: "n8n",
-    title: "Software Engineer",
+    title: "Product Engineer",
     date: "Mar 2026 - Present",
     image: "/n8n-icon.svg",
     description: "On the Relay team, contributing to n8n Connect — n8n's AI and Services Gateway.",
@@ -155,9 +155,9 @@ const experiences = [
 
 const developerRelations = [
   {
-    title: "Storyblok Ambassador",
-    description: "Creating YouTube videos, blog posts and helping in Discord",
-    date: "Apr 2023 - Apr 2024",
+    title: "Cursor Ambassador",
+    description: "Organising meetups and helping in Discord",
+    date: "November 2025 - Present",
   },
   {
     title: "Supabase Ambassador",
@@ -165,9 +165,9 @@ const developerRelations = [
     date: "Jan 2025 - Present",
   },
   {
-    title: "Cursor Ambassador",
-    description: "Organising meetups and helping in Discord",
-    date: "November 2025 - Present",
+    title: "Storyblok Ambassador",
+    description: "Creating YouTube videos, blog posts and helping in Discord",
+    date: "Apr 2023 - Apr 2024",
   },
 ];
 

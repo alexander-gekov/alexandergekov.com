@@ -51,7 +51,7 @@
     </div>
 
     <p class="text-sm text-muted-foreground mt-6 xl:max-w-1/2">
-      Software Engineer at
+      Product Engineer at
       <LinkPreview
         url="https://n8n.io"
         class="inline-flex items-center font-bold z-20 pb-0.5 border-b-2 border-muted-text hover:border-foreground transition-all duration-300">
@@ -59,7 +59,7 @@
           <img
             src="/n8n-icon.svg"
             alt="n8n Logo"
-            class="w-4 h-4 mr-1.5" />
+            class="h-3.5 w-auto mr-1.5" />
           n8n
         </div>
       </LinkPreview>
