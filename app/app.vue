@@ -125,7 +125,7 @@ const projects = [
 const experiences = [
   {
     company: "n8n",
-    title: "Software Engineer",
+    title: "Product Engineer",
     date: "Mar 2026 - Present",
     image: "/n8n-icon.svg",
     description: "On the Relay team, contributing to n8n Connect — n8n's AI and Services Gateway.",
